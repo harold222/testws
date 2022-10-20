@@ -6,6 +6,7 @@ using WSGYG.Shared.Functions;
 namespace WSGYG.Controllers
 {
 
+
     [ApiController]
     [Route("[controller]")]
     public class UpdateBPController : Controller

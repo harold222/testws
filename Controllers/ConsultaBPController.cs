@@ -37,7 +37,7 @@ namespace WSGYG.Controllers
             }
             catch (Exception e)
             {
-                
+                // determinar la causa del error del http para enviar su respectivo codigo
                 return StatusCode(500);
             }
         }
