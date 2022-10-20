@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace WSGYG.Shared.Functions
 {
@@ -21,7 +22,7 @@ namespace WSGYG.Shared.Functions
             HttpWebRequest web = WebRequest.Create(url) as HttpWebRequest;
 
             web.Method = "GET";
-            web.ContentType = "text/xml; charset=utf-8";
+            web.ContentType = "text/xml; charset='utf-8'";
             web.Headers.Add("apikey", apiKey);
 
             if (!string.IsNullOrEmpty(accessToken))
@@ -47,7 +48,105 @@ namespace WSGYG.Shared.Functions
             return Deserialize.Xml<TResponse>(text);
         }
 
-       
+        public string postXMLData(string url, string apiKey, string requestXml, string? accessToken = null)
+        {
+            HttpWebRequest web = (HttpWebRequest)WebRequest.Create(url);
+            byte[] bytes = Encoding.ASCII.GetBytes(requestXml);
+            web.ContentType = "text/xml; encoding='utf-8'";
+            web.ContentLength = bytes.Length;
+            web.Method = "POST";
+
+
+            web.Headers.Add("apikey", apiKey);
+
+            if (!string.IsNullOrEmpty(accessToken))
+                web.Headers.Add("Authorization", $"Bearer {accessToken}");
+
+
+            Stream requestStream = web.GetRequestStream();
+            requestStream.Write(bytes, 0, bytes.Length);
+            requestStream.Close();
+
+            HttpWebResponse response = (HttpWebResponse)web.GetResponse();
+            Stream responseStream = response.GetResponseStream();
+            string responseStr = new StreamReader(responseStream).ReadToEnd();
+
+
+            return responseStr;
+        }
+
+        public TResponse PostExpedia<TResponse>(string url, string apiKey, object postData, string? accessToken)
+        {
+            HttpWebRequest web = (HttpWebRequest)WebRequest.Create(url);
+
+            web.Method = "POST";
+            web.ContentType = "text/xml; encoding='utf-8'";
+            web.Headers.Add("apikey", apiKey);
+
+            if (!string.IsNullOrEmpty(accessToken))
+                web.Headers.Add("Authorization", $"Bearer {accessToken}");
+
+            using (StreamWriter streamWriter = new StreamWriter(web.GetRequestStream()))
+            {
+                string data = JsonConvert.SerializeObject(postData);
+                streamWriter.Write(data);
+            }
+
+            string text;
+            using (HttpWebResponse response = (HttpWebResponse)web.GetResponse())
+            {
+                // Get the stream associated with the response.
+                Stream stream = response.GetResponseStream();
+                Encoding encoding = Encoding.UTF8;
+                ContentType contentType = new ContentType(response.Headers[HttpResponseHeader.ContentType]);
+                if (!string.IsNullOrEmpty(contentType.CharSet))
+                {
+                    encoding = Encoding.GetEncoding(contentType.CharSet);
+                }
+
+                using (StreamReader reader = new StreamReader(stream, encoding))
+                {
+                    text = reader.ReadToEnd();
+                }
+            }
+
+            return Deserialize.Xml<TResponse>(text);
+        }
+
+        public async Task<XmlDocument> ObtenerInformacionTotalStay(string url, string xmlinput)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
+            string postData = "Data=" + xmlinput;
+            byte[] data = Encoding.ASCII.GetBytes(postData);
+
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+            // Set some reasonable limits on resources used by this request
+            request.MaximumAutomaticRedirections = 4;
+            request.MaximumResponseHeadersLength = 4;
+            // Set credentials to use for this request.
+            request.Credentials = CredentialCache.DefaultCredentials;
+
+            using (Stream stream = await request.GetRequestStreamAsync())
+            {
+                await stream.WriteAsync(data, 0, data.Length);
+            }
+
+            HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync();
+
+            string text = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();
+
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.LoadXml(text);
+
+
+            return xDoc;
+        }
+
 
         public static async Task<Response> PostFromUrl<Response>(string url, object body, string accessToken = null)
         {
