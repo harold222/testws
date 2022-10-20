@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WSGYG</name>
+    </assembly>
+    <members>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Bpartner">
+            <summary>
+            Numero del BP (Business Parther)
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Category">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Partner">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.PartnerType">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.GroupBP">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.TitleKey">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.FirstName">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.MiddleName">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.LastName">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.SecondName">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.SearchTerm1">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.SearchTerm2">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.PostlCod1">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Street">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.City1">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.District">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Land1">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Regio">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Langu">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Telephonetel">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.TelephoneMob">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Fax">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Email">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Sex">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.MaritalStatus">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Occupation">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.BirthDate">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.DeathDate">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.FoundationDate">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.LegalForm">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.LegalOrg">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.IndustrySector">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.TaxNumber">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.TaxType">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.NatPerson">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Bpkind">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.DateFrom">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.DateTo">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.AreaVentas">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Grp">
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.BuPartnerRole">
+            <example>CRM000</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.SalesOrganization">
+            <example>O 50000026</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.DistributionChannel">
+            <example>AP</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Division">
+            <example>SF</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.CustomerGroup">
+            <example>Z1</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.CustPricProc">
+            <example>1</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Currency">
+            <example>COP</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.ShippingCond">
+            <example>01</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.PaymentTerms">
+            <example>0001</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Id">
+            <example>String 50</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.MsgId">
+            <example>String 51</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Msgty">
+            <example>S</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Msgno">
+            <example>53</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Msgv1">
+            <example>String 54</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Msgv2">
+            <example>String 55</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Msgv3">
+            <example>String 56</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Msgv4">
+            <example>String 57</example>
+        </member>
+        <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Message">
+            <example>String 58</example>
+        </member>
+    </members>
+</doc>
