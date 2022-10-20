@@ -6,6 +6,7 @@ namespace WSGYG.Models.UpdateBP
     [XmlRoot(ElementName = "I_ES_DATA_BP")]
     public class UpdateBPRequest
 
+
     {
         /// <summary>
         /// Número del BP
