@@ -232,3 +232,4 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+.vs/WSGYG/v17/.suo
