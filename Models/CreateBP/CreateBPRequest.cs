@@ -17,8 +17,8 @@
         [MaxLength(4, ErrorMessage = "El máximo de carácteres permitidos para el campo {0} es {1}")]
         public string? GROUPBP { get; set; }
 
-        //[MaxLength(4, ErrorMessage = "El máximo de carácteres permitidos para el campo {0} es {1}")]
-        public decimal? TITLE_KEY { get; set; } = 0001;
+        [MaxLength(4, ErrorMessage = "El máximo de carácteres permitidos para el campo {0} es {1}")]
+        public string? TITLE_KEY { get; set; } = "0001";
 
         [MaxLength(40, ErrorMessage = "El máximo de carácteres permitidos para el campo {0} es {1}")]
         public string? FIRSTNAME { get; set; }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\harold.pedraza\\Documents\\GitHub\\SIIFFunctions\\Comfama\\WSGYG\\WSGYG.csproj": {}
+    "C:\\Users\\harold.pedraza\\Documents\\GitHub\\.net6\\WSGYG\\WSGYG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\harold.pedraza\\Documents\\GitHub\\SIIFFunctions\\Comfama\\WSGYG\\WSGYG.csproj": {
+    "C:\\Users\\harold.pedraza\\Documents\\GitHub\\.net6\\WSGYG\\WSGYG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\SIIFFunctions\\Comfama\\WSGYG\\WSGYG.csproj",
+        "projectUniqueName": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\.net6\\WSGYG\\WSGYG.csproj",
         "projectName": "WSGYG",
-        "projectPath": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\SIIFFunctions\\Comfama\\WSGYG\\WSGYG.csproj",
+        "projectPath": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\.net6\\WSGYG\\WSGYG.csproj",
         "packagesPath": "C:\\Users\\harold.pedraza\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\SIIFFunctions\\Comfama\\WSGYG\\obj\\",
+        "outputPath": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\.net6\\WSGYG\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\harold.pedraza\\AppData\\Roaming\\NuGet\\NuGet.Config",

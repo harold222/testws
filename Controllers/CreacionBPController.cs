@@ -26,7 +26,6 @@ namespace WSGYG.Controllers
         [HttpPost]
         public async Task<IActionResult> index([FromBody] CreateBPrequest request)
         {
-            var a = request.TITLE_KEY;
             return Ok();
         }
     }
