@@ -26,7 +26,17 @@ namespace WSGYG.Controllers
         [HttpPost]
         public async Task<IActionResult> index([FromBody] CreateBPrequest request)
         {
-            return Ok();
+            Http http = new();
+            try
+            {
+                CreateBPResponse response = new();
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                // escribir en log
+                return StatusCode(500);
+            }
         }
     }
 }

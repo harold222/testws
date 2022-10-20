@@ -58,7 +58,7 @@ namespace WSGYG.Models.CreateBP
         [JsonPropertyName("TITLE_KEY")]
         [XmlElement(ElementName = "TITLE_KEY")]
         [MaxLength(4, ErrorMessage = "El máximo de carácteres permitidos para el campo {0} es {1}")]
-        public string? TitleKey { get; set; }
+        public string? TitleKey { get; set; } = "0001";
 
         /// <summary>
         /// Primer Nombre
@@ -220,7 +220,7 @@ namespace WSGYG.Models.CreateBP
         public string? Sex { get; set; }
 
         /// <summary>
-        /// Estado Civil cliente
+        /// Estado Civil cliente 1 Soltero,  2 Casado, 3 Separado, 4 Viudo, 5 Unión libre
         /// </summary>
         /// <example></example>
         [JsonPropertyName("MARITALSTATUS")]
