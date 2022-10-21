@@ -5,7 +5,6 @@ using Microsoft.OpenApi.Models;
 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>
@@ -13,7 +12,7 @@ builder.Services.AddSwaggerGen(opt =>
     opt.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "YourApiName",
+        Title = "WSGYG",
         Description = "WebService Comfama",
         Contact = new OpenApiContact
         {

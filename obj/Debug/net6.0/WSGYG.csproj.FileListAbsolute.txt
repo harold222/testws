@@ -27,14 +27,15 @@ C:\Users\harold.pedraza\Documents\GitHub\SIIFFunctions\Comfama\WSGYG\obj\Debug\n
 C:\Users\harold.pedraza\Documents\GitHub\SIIFFunctions\Comfama\WSGYG\obj\Debug\net6.0\WSGYG.pdb
 C:\Users\harold.pedraza\Documents\GitHub\SIIFFunctions\Comfama\WSGYG\obj\Debug\net6.0\WSGYG.genruntimeconfig.cache
 C:\Users\harold.pedraza\Documents\GitHub\SIIFFunctions\Comfama\WSGYG\obj\Debug\net6.0\ref\WSGYG.dll
-C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\appsettings.Local.json
-C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\WSGYG.exe
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\appsettings.Local.json
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\appsettings.Production.json
+C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\WSGYG.exe
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\WSGYG.deps.json
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\WSGYG.runtimeconfig.json
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\WSGYG.dll
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\WSGYG.pdb
+C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\WSGYG.xml
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\Microsoft.OpenApi.dll
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
@@ -53,8 +54,7 @@ C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\obj\Debug\net6.0\scopedcss\
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\obj\Debug\net6.0\WSGYG.csproj.CopyComplete
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\obj\Debug\net6.0\WSGYG.dll
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\obj\Debug\net6.0\refint\WSGYG.dll
+C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\obj\Debug\net6.0\WSGYG.xml
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\obj\Debug\net6.0\WSGYG.pdb
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\obj\Debug\net6.0\WSGYG.genruntimeconfig.cache
 C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\obj\Debug\net6.0\ref\WSGYG.dll
-C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\bin\Debug\net6.0\WSGYG.xml
-C:\Users\harold.pedraza\Documents\GitHub\.net6\WSGYG\obj\Debug\net6.0\WSGYG.xml

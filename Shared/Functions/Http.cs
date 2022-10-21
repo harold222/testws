@@ -9,6 +9,7 @@ using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using WSGYG.Shared.Enums;
 
 namespace WSGYG.Shared.Functions
 {
@@ -48,7 +49,7 @@ namespace WSGYG.Shared.Functions
             return Deserialize.Xml<TResponse>(text);
         }
 
-        public string postXMLData(string url, string apiKey, string requestXml, string? accessToken = null)
+        public TResponse postXMLData<TResponse>(string url, string apiKey, string requestXml, AuthorizationEnum typeAuth,string? accessToken = null)
         {
             HttpWebRequest web = (HttpWebRequest)WebRequest.Create(url);
             byte[] bytes = Encoding.ASCII.GetBytes(requestXml);
@@ -56,12 +57,20 @@ namespace WSGYG.Shared.Functions
             web.ContentLength = bytes.Length;
             web.Method = "POST";
 
-
             web.Headers.Add("apikey", apiKey);
 
             if (!string.IsNullOrEmpty(accessToken))
-                web.Headers.Add("Authorization", $"Bearer {accessToken}");
-
+            {
+                switch (typeAuth)
+                {
+                    case AuthorizationEnum.AUTHORIZATION:
+                        web.Headers.Add("Authorization", $"Bearer {accessToken}");
+                        break;
+                    case AuthorizationEnum.ACCES_TOKEN:
+                        web.Headers.Add("access_token", accessToken);
+                        break;
+                }
+            }
 
             Stream requestStream = web.GetRequestStream();
             requestStream.Write(bytes, 0, bytes.Length);
@@ -69,10 +78,9 @@ namespace WSGYG.Shared.Functions
 
             HttpWebResponse response = (HttpWebResponse)web.GetResponse();
             Stream responseStream = response.GetResponseStream();
+            // Get response in XML
             string responseStr = new StreamReader(responseStream).ReadToEnd();
-
-
-            return responseStr;
+            return Deserialize.Xml<TResponse>(responseStr);
         }
 
         public TResponse PostExpedia<TResponse>(string url, string apiKey, object postData, string? accessToken)

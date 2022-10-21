@@ -1,10 +1,10 @@
 ﻿using System.Xml.Serialization;
 
-namespace WSGYG.Models.QueryBP.Response
+namespace WSGYG.Models.QueryBP
 {
 
     [XmlRoot(ElementName = "properties")]
-    public class QueryBPResponseXML
+    public class QueryBPResponse
     {
         [XmlElement(ElementName = "Type")]
         public string Type { get; set; }

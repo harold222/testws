@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 using WSGYG.Models.QueryBP;
-using WSGYG.Models.QueryBP.Response;
 using WSGYG.Models.Token;
 using WSGYG.Shared.Functions;
 
@@ -32,12 +31,12 @@ namespace WSGYG.Controllers
             try
             {
                 Dictionary<string, string?>? requestDict = this.toDict.Trasform<QueryBPRequest>(request);
-                QueryBPResponseXML? response = await http.GETAsync<QueryBPResponseXML, QueryBPRequest>(this.url, this.tokenParams.client_id, requestDict, "ogCcLVNmPgZZQJEwV5sQdmgNHzUf").ConfigureAwait(false);
+                QueryBPResponse? response = await http.GETAsync<QueryBPResponse, QueryBPRequest>(this.url, this.tokenParams.client_id, requestDict).ConfigureAwait(false);
                 return Ok(response);
             }
             catch (Exception e)
             {
-                // determinar la causa del error del http para enviar su respectivo codigo
+                // escribir en log
                 return StatusCode(500);
             }
         }

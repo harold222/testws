@@ -6,7 +6,7 @@ namespace WSGYG.Shared.Functions
 {
     public static class Deserialize
     {
-        public static string Serialize<T>(this T value)
+        public static string Serialize<T>(this T value, string? openTags = null, string? closeTags = null)
         {
             if (value == null)
                 return string.Empty;
@@ -23,7 +23,16 @@ namespace WSGYG.Shared.Functions
             namespaces.Add(string.Empty, string.Empty);
 
             xmlserializer.Serialize(writer, value, namespaces);
-            return stringWriter.ToString();
+
+            string xml = stringWriter.ToString();
+
+            if (!string.IsNullOrEmpty(openTags))
+                xml = $"{openTags}{xml}";
+
+            if (!string.IsNullOrEmpty(closeTags))
+                xml += closeTags;
+
+            return xml;
         }
 
         public static T Xml<T>(string xml)

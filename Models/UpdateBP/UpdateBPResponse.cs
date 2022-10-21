@@ -2,7 +2,7 @@
 
 namespace WSGYG.Models.UpdateBP
 {
-    public class UpdateBPResponseXML
+    public class UpdateBPResponse
     {
         [XmlElement(ElementName = "BPARTNER")]
         public string Bpartner { get; set; }
@@ -56,27 +56,27 @@ namespace WSGYG.Models.UpdateBP
         public string Sex { get; set; }
 
         [XmlElement(ElementName = "ESTADO")]
-        public string Estado { get; set; }
+        public string State { get; set; }
 
         [XmlElement(ElementName = "FECHA_NAC")]
-        public string Fecha_Nac { get; set; }
+        public string BirthDate { get; set; }
 
         [XmlElement(ElementName = "NIF")]
         public string Nif { get; set; }
 
         [XmlElement(ElementName = "TIPOID")]
-        public string Tipoid { get; set; }
+        public string TypeId { get; set; }
 
         [XmlElement(ElementName = "PET_BORRADO")]
-        public string Pet_Borrado { get; set; }
+        public string DeletePet { get; set; }
 
         [XmlElement(ElementName = "CLAVE_GRPO")]
-        public string Clave_Grpo { get; set; }
+        public string GrpKey { get; set; }
 
         [XmlElement(ElementName = "LONGITUD")]
-        public string Longitud { get; set; }
+        public string Length { get; set; }
 
         [XmlElement(ElementName = "LATITUD")]
-        public string Latitud { get; set; }
+        public string Latitude { get; set; }
     }
 }

@@ -298,7 +298,7 @@ namespace WSGYG.Models.CreateBP
         public string? TaxNumber { get; set; }
 
         /// <summary>
-        /// Tipo de número identificación del cliente
+        /// Tipo de número identificacion del cliente
         /// </summary>
         /// <example></example>
         [JsonPropertyName("TAXTYPE")]

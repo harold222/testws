@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Xml.Serialization;
-using WSGYG.Models.CreateBP;
+﻿using WSGYG.Models.CreateBP;
 using WSGYG.Models.Token;
+using WSGYG.Shared.Enums;
 using WSGYG.Shared.Functions;
 
 namespace WSGYG.Controllers
@@ -15,8 +13,9 @@ namespace WSGYG.Controllers
         private string url { get; set; }
         private readonly IConfiguration _config;
         private readonly string complement = "/CrearBPCRM";
-        private ModelToDictionary toDict = new();
         private TokenParams tokenParams;
+        private readonly string openTagXml = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:urn='urn:sap-com:document:sap:rfc:functions'><soapenv:Header/><soapenv:Body><urn:ZFM_CREATE_BP>";
+        private readonly string closeTagXml = "</urn:ZFM_CREATE_BP></soapenv:Body></soapenv:Envelope>";
 
         public CreacionBPController(IConfiguration config)
         {
@@ -31,13 +30,8 @@ namespace WSGYG.Controllers
             Http http = new();
             try
             {
-                CreateBPResponse response = new();
-
-                var d = Deserialize.Serialize<CreateBPrequest>(request);
-
-                string s = JsonConvert.SerializeObject(request);
-                System.Xml.XmlDocument? a = JsonConvert.DeserializeXmlNode(s, "I_ES_DATA_BP");
-
+                string requestXml = Deserialize.Serialize<CreateBPrequest>(request, this.openTagXml, this.closeTagXml);
+                CreateBPResponse response = http.postXMLData<CreateBPResponse>(this.url, this.tokenParams.client_id, requestXml, AuthorizationEnum.AUTHORIZATION);
                 return Ok(response);
             }
             catch (Exception e)
