@@ -1,25 +1,40 @@
 ﻿using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
+
 namespace WSGYG.Models.AssignBP
 {
-    [XmlRoot(ElementName = "urn:ZSdserviciosCargaRol")]
+    /// 
+    [XmlRoot(ElementName = "ImData")]
     public class AssignBPRequest
     {
-        [XmlElement(ElementName = "ImData")]
-        public AssignImData ImData { get; set; }
+        
 
-        [XmlElement(ElementName = "ImTest")]
-        public AssignItemTest? ImTest { get; set; }
+        [XmlElement(ElementName = "item")]
+        public List<AssingItem> item { get; set; }
+
     }
 
-    [XmlRoot(ElementName = "ImData")]
-    public class AssignImData
+    public class AssingItem
+    {
+        [XmlElement(ElementName = "Partner")]
+        public string Partner { get; set; }
+
+        [XmlElement(ElementName = "PartnerRole")]
+        public List<AssignPartnerRole>  PartnerRole { get; set; }
+    }
+
+    public class AssignPartnerRole
     {
         [XmlElement(ElementName = "item")]
-        public string Item { get; set; }
+        public List<AssignPartnerRoleTwo> item { get; set; }
+
     }
 
-    [XmlRoot(ElementName = "ImTest")]
-    public class AssignItemTest{ }
+    public class AssignPartnerRoleTwo
+    {
+        [XmlElement(ElementName = "PartnerRole")]
+        public string PartnerRole { get; set; }
+
+    }
 }
