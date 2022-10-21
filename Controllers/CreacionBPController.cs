@@ -31,7 +31,7 @@ namespace WSGYG.Controllers
             try
             {
                 string requestXml = Deserialize.Serialize<CreateBPrequest>(request, this.openTagXml, this.closeTagXml);
-                CreateBPResponse response = http.postXMLData<CreateBPResponse>(this.url, this.tokenParams.client_id, requestXml, AuthorizationEnum.AUTHORIZATION);
+                CreateBPResponse response = await http.postXMLData<CreateBPResponse>(this.url, this.tokenParams.client_id, requestXml, AuthorizationEnum.AUTHORIZATION).ConfigureAwait(false);
                 return Ok(response);
             }
             catch (Exception e)

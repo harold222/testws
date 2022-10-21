@@ -1,13 +1,8 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using WSGYG.Shared.Enums;
 
@@ -49,7 +44,7 @@ namespace WSGYG.Shared.Functions
             return Deserialize.Xml<TResponse>(text);
         }
 
-        public TResponse postXMLData<TResponse>(string url, string apiKey, string requestXml, AuthorizationEnum typeAuth,string? accessToken = null)
+        public async Task<TResponse> postXMLData<TResponse>(string url, string apiKey, string requestXml, AuthorizationEnum typeAuth,string? accessToken = null)
         {
             HttpWebRequest web = (HttpWebRequest)WebRequest.Create(url);
             byte[] bytes = Encoding.ASCII.GetBytes(requestXml);
@@ -76,7 +71,8 @@ namespace WSGYG.Shared.Functions
             requestStream.Write(bytes, 0, bytes.Length);
             requestStream.Close();
 
-            HttpWebResponse response = (HttpWebResponse)web.GetResponse();
+
+            HttpWebResponse response = (HttpWebResponse)await web.GetResponseAsync().ConfigureAwait(false);
             Stream responseStream = response.GetResponseStream();
             // Get response in XML
             string responseStr = new StreamReader(responseStream).ReadToEnd();
@@ -150,7 +146,6 @@ namespace WSGYG.Shared.Functions
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.LoadXml(text);
-
 
             return xDoc;
         }
