@@ -4,6 +4,9 @@
         <name>WSGYG</name>
     </assembly>
     <members>
+        <member name="T:WSGYG.Models.AssignBP.AssignBPRequest">
+            
+        </member>
         <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Bpartner">
             <summary>
             Numero del BP (Business Parther)
@@ -349,31 +352,149 @@
             </summary>
             <example></example>
         </member>
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.FirstName" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.MiddleName" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.LastName" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.SecondName" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.SearchTerm1" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.Postl_Cod1" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.Street" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.City" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.Country" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.Region" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.Langu" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.Telephone" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.Movil" -->
-        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Fax">
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.FirstName">
+            <summary>
+            Primer Nombre
+            </summary>
             <example></example>
         </member>
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.Email" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.Sex" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.State" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.BirthDate" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.Nif" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.TypeId" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.DeletePet" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.GrpKey" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.Length" -->
-        <!-- Badly formed XML comment ignored for member "P:WSGYG.Models.UpdateBP.UpdateBPRequest.Latitude" -->
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.MiddleName">
+            <summary>
+            Segundo Nombre
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.LastName">
+            <summary>
+            Primer Apellido
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.SecondName">
+            <summary>
+            Segundo Apellido
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.SearchTerm1">
+            <summary>
+            Numero de documento de identidad debe ser igual a la etiqueta TAXNUMBER
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Postl_Cod1">
+            <summary>
+            Codigo Postal
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Street">
+            <summary>
+            Dirección vivienda cliente
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.City">
+            <summary>
+            Ciudad
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Country">
+            <summary>
+            Pais
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Region">
+            <summary>
+            Region (Estado federal, "land", provincia, condado)
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Langu">
+            <summary>
+            Lenguaje clave del idioma
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Telephone">
+            <summary>
+            Telefono fijo = prefijo + numero
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Movil">
+            <summary>
+            Telefono movil = prefijo + numero
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Fax">
+            <summary>
+            Fax = prefijo + numero
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Email">
+            <summary>
+            Direccion de correo electronico
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Sex">
+            <summary>
+            "1" Femenino,"2" Masculino
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.State">
+            <summary>
+            Estado Civil cliente 1 Soltero,  2 Casado, 3 Separado, 4 Viudo, 5 Unión libre
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.BirthDate">
+            <summary>
+            Fecha de nacimiento en este formato aaaa-mm-dd
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Nif">
+            <summary>
+            Numero de documento de identidad debe ser igual a la etiqueta SEARCHTERM1
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.TypeId">
+            <summary>
+            Tipo de número identificacion del cliente
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.DeletePet">
+            <summary>
+            Peticion de archivado para borrar, es cuando un BP no se va a seguir utilizando
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.GrpKey">
+            <summary>
+            Clave de grupo
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Length">
+            <summary>
+            LONGITUD
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.UpdateBP.UpdateBPRequest.Latitude">
+            <summary>
+            LATITUD
+            </summary>
+            <example></example>
+        </member>
     </members>
 </doc>
