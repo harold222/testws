@@ -4,8 +4,17 @@
         <name>WSGYG</name>
     </assembly>
     <members>
-        <member name="T:WSGYG.Models.AssignBP.AssignBPRequest">
-            
+        <member name="P:WSGYG.Models.AssignBP.AssignItem.AssignPartnerRoleTwo.PartnerRole">
+            <summary>
+            Numero de interlocutor comercial
+            </summary>
+            <example></example>
+        </member>
+        <member name="P:WSGYG.Models.AssignBP.AssignItem.AssingItem.Partner">
+            <summary>
+            Numero de interlocutor comercial
+            </summary>
+            <example></example>
         </member>
         <member name="P:WSGYG.Models.CreateBP.CreateBPrequest.Bpartner">
             <summary>
