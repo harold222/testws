@@ -18,7 +18,7 @@ namespace WSGYG63.Shared.Functions
             HttpWebRequest web = WebRequest.Create(url) as HttpWebRequest;
 
             web.Method = "GET";
-            web.ContentType = "text/xml; charset='utf-8'";
+            //web.ContentType = "text/xml; charset='utf-8'";
             web.Headers.Add("apikey", apiKey);
 
             if (!string.IsNullOrEmpty(accessToken))

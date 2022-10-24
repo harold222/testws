@@ -16,7 +16,6 @@ namespace WSGYG63.Controllers
         private readonly string complement = "/ConsultaBP/ObtenerDataBPSet";
         private ModelToDictionary toDict = new();
         private TokenParams tokenParams;
-
         private readonly GlobalToken currentToken;
 
         public ConsultaBPController(IConfiguration config, IOptions<GlobalToken> token)

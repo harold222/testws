@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace WSGYG63.Models.QueryBP
 {
@@ -45,8 +46,9 @@ namespace WSGYG63.Models.QueryBP
         [XmlElement(ElementName = "Street")]
         public string Street { get; set; }
 
+        [JsonPropertyName("Genero")]
         [XmlElement(ElementName = "Genero")]
-        public string Genero { get; set; }
+        public string Gender { get; set; }
 
         [XmlElement(ElementName = "Birthdate")]
         public string Birthdate { get; set; }
@@ -63,7 +65,8 @@ namespace WSGYG63.Models.QueryBP
         [XmlElement(ElementName = "MobilePhone")]
         public string MobilePhone { get; set; }
 
+        [JsonPropertyName("MENSAJE")]
         [XmlElement(ElementName = "MENSAJE")]
-        public string MENSAJE { get; set; }
+        public string Message { get; set; }
     }
 }
