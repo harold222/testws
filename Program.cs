@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen(opt =>
     opt.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "WSGYG",
+        Title = "WSGYG63",
         Description = "WebService Comfama",
         Contact = new OpenApiContact
         {
@@ -20,7 +20,7 @@ builder.Services.AddSwaggerGen(opt =>
         }
     });
 
-    var filePath = Path.Combine(AppContext.BaseDirectory, "WSGYG.xml");
+    var filePath = Path.Combine(AppContext.BaseDirectory, "WSGYG63.xml");
 
     if (File.Exists(filePath))
         opt.IncludeXmlComments(filePath);

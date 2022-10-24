@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace WSGYG.Shared.Functions
+namespace WSGYG63.Shared.Functions
 {
     public class ModelToDictionary
     {

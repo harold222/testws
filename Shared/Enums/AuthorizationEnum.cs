@@ -1,4 +1,4 @@
-﻿namespace WSGYG.Shared.Enums
+﻿namespace WSGYG63.Shared.Enums
 {
     public enum AuthorizationEnum
     {

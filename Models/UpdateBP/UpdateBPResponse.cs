@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace WSGYG.Models.UpdateBP
+namespace WSGYG63.Models.UpdateBP
 {
     public class UpdateBPResponse
     {

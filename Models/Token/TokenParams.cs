@@ -1,4 +1,4 @@
-﻿namespace WSGYG.Models.Token
+﻿namespace WSGYG63.Models.Token
 {
     public class TokenParams
     {

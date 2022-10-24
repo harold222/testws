@@ -1,4 +1,4 @@
-﻿namespace WSGYG.Models.QueryBP
+﻿namespace WSGYG63.Models.QueryBP
 {
     public class QueryBPRequest
     {

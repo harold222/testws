@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WSGYG.Models.AssignBP;
-using WSGYG.Models.Token;
-using WSGYG.Shared.Enums;
-using WSGYG.Shared.Functions;
+using WSGYG63.Models.AssignBP;
+using WSGYG63.Models.Token;
+using WSGYG63.Shared.Enums;
+using WSGYG63.Shared.Functions;
 
-namespace WSGYG.Controllers
+namespace WSGYG63.Controllers
 {
     [ApiController]
     [Route("[controller]")]

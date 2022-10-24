@@ -1,9 +1,9 @@
-﻿using WSGYG.Models.UpdateBP;
-using WSGYG.Models.Token;
-using WSGYG.Shared.Functions;
-using WSGYG.Shared.Enums;
+﻿using WSGYG63.Models.UpdateBP;
+using WSGYG63.Models.Token;
+using WSGYG63.Shared.Functions;
+using WSGYG63.Shared.Enums;
 
-namespace WSGYG.Controllers
+namespace WSGYG63.Controllers
 {
 
     [ApiController]

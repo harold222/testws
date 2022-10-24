@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace WSGYG.Models.AssignBP
+namespace WSGYG63.Models.AssignBP
 {
     public class AssignBPResponse
     {

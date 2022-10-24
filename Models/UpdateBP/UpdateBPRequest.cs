@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
-namespace WSGYG.Models.UpdateBP
+namespace WSGYG63.Models.UpdateBP
 {
     [XmlRoot(ElementName = "I_ES_DATA_BP")]
     public class UpdateBPRequest

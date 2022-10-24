@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
-using WSGYG.Models.QueryBP;
-using WSGYG.Models.Token;
-using WSGYG.Shared.Functions;
+using WSGYG63.Models.QueryBP;
+using WSGYG63.Models.Token;
+using WSGYG63.Shared.Functions;
 
-namespace WSGYG.Controllers
+namespace WSGYG63.Controllers
 {
     [ApiController]
     [Route("[controller]")]

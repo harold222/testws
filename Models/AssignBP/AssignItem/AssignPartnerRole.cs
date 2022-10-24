@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace WSGYG.Models.AssignBP.AssignItem
+namespace WSGYG63.Models.AssignBP.AssignItem
 {
     public class AssignPartnerRole
     {

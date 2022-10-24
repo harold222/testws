@@ -250,9 +250,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\.net6\\WSGYG\\WSGYG.csproj",
-      "projectName": "WSGYG",
-      "projectPath": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\.net6\\WSGYG\\WSGYG.csproj",
+      "projectUniqueName": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\.net6\\WSGYG\\WSGYG63.csproj",
+      "projectName": "WSGYG63",
+      "projectPath": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\.net6\\WSGYG\\WSGYG63.csproj",
       "packagesPath": "C:\\Users\\harold.pedraza\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\.net6\\WSGYG\\obj\\",
       "projectStyle": "PackageReference",

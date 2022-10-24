@@ -4,9 +4,9 @@ using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
 using System.Xml;
-using WSGYG.Shared.Enums;
+using WSGYG63.Shared.Enums;
 
-namespace WSGYG.Shared.Functions
+namespace WSGYG63.Shared.Functions
 {
     public class Http
     {
@@ -79,76 +79,76 @@ namespace WSGYG.Shared.Functions
             return Deserialize.Xml<TResponse>(responseStr);
         }
 
-        public TResponse PostExpedia<TResponse>(string url, string apiKey, object postData, string? accessToken)
-        {
-            HttpWebRequest web = (HttpWebRequest)WebRequest.Create(url);
+        //public TResponse PostExpedia<TResponse>(string url, string apiKey, object postData, string? accessToken)
+        //{
+        //    HttpWebRequest web = (HttpWebRequest)WebRequest.Create(url);
 
-            web.Method = "POST";
-            web.ContentType = "text/xml; encoding='utf-8'";
-            web.Headers.Add("apikey", apiKey);
+        //    web.Method = "POST";
+        //    web.ContentType = "text/xml; encoding='utf-8'";
+        //    web.Headers.Add("apikey", apiKey);
 
-            if (!string.IsNullOrEmpty(accessToken))
-                web.Headers.Add("Authorization", $"Bearer {accessToken}");
+        //    if (!string.IsNullOrEmpty(accessToken))
+        //        web.Headers.Add("Authorization", $"Bearer {accessToken}");
 
-            using (StreamWriter streamWriter = new StreamWriter(web.GetRequestStream()))
-            {
-                string data = JsonConvert.SerializeObject(postData);
-                streamWriter.Write(data);
-            }
+        //    using (StreamWriter streamWriter = new StreamWriter(web.GetRequestStream()))
+        //    {
+        //        string data = JsonConvert.SerializeObject(postData);
+        //        streamWriter.Write(data);
+        //    }
 
-            string text;
-            using (HttpWebResponse response = (HttpWebResponse)web.GetResponse())
-            {
-                // Get the stream associated with the response.
-                Stream stream = response.GetResponseStream();
-                Encoding encoding = Encoding.UTF8;
-                ContentType contentType = new ContentType(response.Headers[HttpResponseHeader.ContentType]);
-                if (!string.IsNullOrEmpty(contentType.CharSet))
-                {
-                    encoding = Encoding.GetEncoding(contentType.CharSet);
-                }
+        //    string text;
+        //    using (HttpWebResponse response = (HttpWebResponse)web.GetResponse())
+        //    {
+        //        // Get the stream associated with the response.
+        //        Stream stream = response.GetResponseStream();
+        //        Encoding encoding = Encoding.UTF8;
+        //        ContentType contentType = new ContentType(response.Headers[HttpResponseHeader.ContentType]);
+        //        if (!string.IsNullOrEmpty(contentType.CharSet))
+        //        {
+        //            encoding = Encoding.GetEncoding(contentType.CharSet);
+        //        }
 
-                using (StreamReader reader = new StreamReader(stream, encoding))
-                {
-                    text = reader.ReadToEnd();
-                }
-            }
+        //        using (StreamReader reader = new StreamReader(stream, encoding))
+        //        {
+        //            text = reader.ReadToEnd();
+        //        }
+        //    }
 
-            return Deserialize.Xml<TResponse>(text);
-        }
+        //    return Deserialize.Xml<TResponse>(text);
+        //}
 
-        public async Task<XmlDocument> ObtenerInformacionTotalStay(string url, string xmlinput)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+        //public async Task<XmlDocument> ObtenerInformacionTotalStay(string url, string xmlinput)
+        //{
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
-            string postData = "Data=" + xmlinput;
-            byte[] data = Encoding.ASCII.GetBytes(postData);
+        //    string postData = "Data=" + xmlinput;
+        //    byte[] data = Encoding.ASCII.GetBytes(postData);
 
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-            request.AutomaticDecompression = DecompressionMethods.GZip;
-            // Set some reasonable limits on resources used by this request
-            request.MaximumAutomaticRedirections = 4;
-            request.MaximumResponseHeadersLength = 4;
-            // Set credentials to use for this request.
-            request.Credentials = CredentialCache.DefaultCredentials;
+        //    request.Method = "POST";
+        //    request.ContentType = "application/x-www-form-urlencoded";
+        //    request.ContentLength = data.Length;
+        //    request.AutomaticDecompression = DecompressionMethods.GZip;
+        //    // Set some reasonable limits on resources used by this request
+        //    request.MaximumAutomaticRedirections = 4;
+        //    request.MaximumResponseHeadersLength = 4;
+        //    // Set credentials to use for this request.
+        //    request.Credentials = CredentialCache.DefaultCredentials;
 
-            using (Stream stream = await request.GetRequestStreamAsync())
-            {
-                await stream.WriteAsync(data, 0, data.Length);
-            }
+        //    using (Stream stream = await request.GetRequestStreamAsync())
+        //    {
+        //        await stream.WriteAsync(data, 0, data.Length);
+        //    }
 
-            HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync();
+        //    HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync();
 
-            string text = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();
+        //    string text = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();
 
 
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.LoadXml(text);
+        //    XmlDocument xDoc = new XmlDocument();
+        //    xDoc.LoadXml(text);
 
-            return xDoc;
-        }
+        //    return xDoc;
+        //}
 
 
         public static async Task<Response> PostFromUrl<Response>(string url, object body, string accessToken = null)
@@ -170,7 +170,7 @@ namespace WSGYG.Shared.Functions
             return returnObject;
         }
 
-        public static string QueryString(IDictionary<string, string> dict)
+        private static string QueryString(IDictionary<string, string> dict)
         {
             List<string> list = new List<string>();
             foreach (KeyValuePair<string, string> item in dict)

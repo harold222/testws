@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sPLQPKSjrbDWwUu6LrJIZdVPW/mMGXExxRHxcKNVIOXawX2a0aiJkKtGtzPXuI6q1Cl/hbXzzcdUUADHMHGyqA==",
+  "dgSpecHash": "VkB7MCf742iNTasn30XNsrZCXVrPdGRFohLdeVL8DA0s7Pjijnjg/+FiHL6PmCO1ve50Pi2pypcppj2+vuxQSA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\.net6\\WSGYG\\WSGYG.csproj",
+  "projectFilePath": "C:\\Users\\harold.pedraza\\Documents\\GitHub\\.net6\\WSGYG\\WSGYG63.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\harold.pedraza\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\harold.pedraza\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

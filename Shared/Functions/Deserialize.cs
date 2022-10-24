@@ -2,7 +2,7 @@
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace WSGYG.Shared.Functions
+namespace WSGYG63.Shared.Functions
 {
     public static class Deserialize
     {

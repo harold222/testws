@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 using System.Xml.Serialization;
-using WSGYG.Models.AssignBP.AssignItem;
+using WSGYG63.Models.AssignBP.AssignItem;
 
-namespace WSGYG.Models.AssignBP
+namespace WSGYG63.Models.AssignBP
 {
     [XmlRoot(ElementName = "ImData")]
     public class AssignBPRequest

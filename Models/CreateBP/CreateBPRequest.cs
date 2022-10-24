@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
-namespace WSGYG.Models.CreateBP
+namespace WSGYG63.Models.CreateBP
 {
     [XmlRoot(ElementName = "I_ES_DATA_BP")]
     public class CreateBPrequest

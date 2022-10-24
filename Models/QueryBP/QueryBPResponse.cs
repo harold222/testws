@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace WSGYG.Models.QueryBP
+namespace WSGYG63.Models.QueryBP
 {
 
     [XmlRoot(ElementName = "properties")]
