@@ -165,6 +165,9 @@ namespace WSGYG63.Shared.Functions
                 using HttpResponseMessage response = await httpClient.PostAsJsonAsync(url, body);
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 returnObject = JsonConvert.DeserializeObject<Response>(apiResponse);
+                // https://stackoverflow.com/questions/11576886/how-to-convert-object-to-dictionarytkey-tvalue-in-c
+                var json = JsonConvert.SerializeObject(returnObject);
+                var dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
             }
 
             return returnObject;
