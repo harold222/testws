@@ -1,6 +1,7 @@
 global using System.ComponentModel.DataAnnotations;
 global using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
+using WSGYG63.Models.Token;
 
 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +21,7 @@ builder.Services.AddSwaggerGen(opt =>
         }
     });
 
-    var filePath = Path.Combine(AppContext.BaseDirectory, "WSGYG63.xml");
+    string? filePath = Path.Combine(AppContext.BaseDirectory, "WSGYG63.xml");
 
     if (File.Exists(filePath))
         opt.IncludeXmlComments(filePath);
@@ -31,7 +32,12 @@ builder.Services.AddSwaggerGen(opt =>
         opt.IncludeXmlComments(filePath);
     }
 });
-// builder.Services.AddSingleton<IResponseHeader, HeaderResponse>();
+
+builder.Services.Configure<GlobalToken>(async x =>
+{
+    x.AccessToken = "";
+    x.ExpiresIn = "";
+});
 
 var app = builder.Build();
 app.UseSwagger();

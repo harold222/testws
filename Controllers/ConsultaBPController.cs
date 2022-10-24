@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Reflection;
 using WSGYG63.Models.QueryBP;
 using WSGYG63.Models.Token;
@@ -16,11 +17,14 @@ namespace WSGYG63.Controllers
         private ModelToDictionary toDict = new();
         private TokenParams tokenParams;
 
-        public ConsultaBPController(IConfiguration config)
+        private readonly GlobalToken currentToken;
+
+        public ConsultaBPController(IConfiguration config, IOptions<GlobalToken> token)
         {
             this._config = config;
             this.url = this._config.GetSection("Comfama:host").Value + complement;
             this.tokenParams = this._config.GetSection("Comfama:token").Get<TokenParams>();
+            this.currentToken = token.Value;
         }
 
         [HttpGet]
