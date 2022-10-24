@@ -201,7 +201,7 @@ namespace WSGYG63.Models.UpdateBP
         /// <example></example>
         [JsonPropertyName("PET_BORRADO")]
         [XmlElement(ElementName = "PET_BORRADO")]
-        [MaxLength(30, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
+        [MaxLength(1, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
         public string? DeletePet { get; set; }
 
         /// <summary>

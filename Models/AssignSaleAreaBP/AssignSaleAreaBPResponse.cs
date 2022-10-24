@@ -1,9 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
-namespace WSGYG63.Models.AssignBP
+namespace WSGYG63.Models.AssignSaleAreaBP
 {
-    public class AssignBPResponse
+    public class AssignSaleAreaBPResponse
     {
         [JsonPropertyName("MSGTY")]
         [XmlElement(ElementName = "MSGTY")]

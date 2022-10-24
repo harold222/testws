@@ -54,7 +54,7 @@ namespace WSGYG63.Models.CreateBP
         /// <summary>
         /// 0001 Señor, 0002 Señora
         /// </summary>
-        /// <example></example>
+        /// <example>0001</example>
         [JsonPropertyName("TITLE_KEY")]
         [XmlElement(ElementName = "TITLE_KEY")]
         [MaxLength(4, ErrorMessage = "El máximo de carácteres permitidos para el campo {0} es {1}")]

@@ -1,4 +1,5 @@
-﻿using WSGYG63.Models.CreateBP;
+﻿using Microsoft.Extensions.Options;
+using WSGYG63.Models.CreateBP;
 using WSGYG63.Models.Token;
 using WSGYG63.Shared.Enums;
 using WSGYG63.Shared.Functions;
@@ -16,12 +17,14 @@ namespace WSGYG63.Controllers
         private TokenParams tokenParams;
         private readonly string openTagXml = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:urn='urn:sap-com:document:sap:rfc:functions'><soapenv:Header/><soapenv:Body><urn:ZFM_CREATE_BP>";
         private readonly string closeTagXml = "</urn:ZFM_CREATE_BP></soapenv:Body></soapenv:Envelope>";
+        private readonly GlobalToken currentToken;
 
-        public CreacionBPController(IConfiguration config)
+        public CreacionBPController(IConfiguration config, IOptions<GlobalToken> token)
         {
             this._config = config;
             this.url = this._config.GetSection("Comfama:host").Value + complement;
             this.tokenParams = this._config.GetSection("Comfama:token").Get<TokenParams>();
+            this.currentToken = token.Value;
         }
 
         [HttpPost]
