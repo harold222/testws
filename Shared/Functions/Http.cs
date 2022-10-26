@@ -150,6 +150,24 @@ namespace WSGYG63.Shared.Functions
         //    return xDoc;
         //}
 
+        public async Task<Response> GetToken<Response>(string url, string apikey, IDictionary<string, string> dict)
+        {
+            Response returnObject = default;
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Add("Content-Typen", "text/xml");
+                httpClient.DefaultRequestHeaders.Add("apikey", apikey);
+
+                httpClient.Timeout = TimeSpan.FromHours(10);
+                dict.Add("Content-Type", "application/x-www-form-urlencoded");
+
+                using HttpResponseMessage response = await httpClient.PostAsync(url, new FormUrlEncodedContent(dict));
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                returnObject = JsonConvert.DeserializeObject<Response>(apiResponse);
+            }
+
+            return returnObject;
+        }
 
         public async Task<Response> PostFromUrl<Response>(string url, object body, string accessToken = null)
         {

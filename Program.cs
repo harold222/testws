@@ -2,6 +2,7 @@ global using System.ComponentModel.DataAnnotations;
 global using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using WSGYG63.Models.Token;
+using WSGYG63.Shared.Functions;
 
 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 var builder = WebApplication.CreateBuilder(args);
@@ -35,8 +36,18 @@ builder.Services.AddSwaggerGen(opt =>
 
 builder.Services.Configure<GlobalToken>(async x =>
 {
-    x.AccessToken = "";
-    x.ExpiresIn = "";
+    string host = builder.Configuration["Comfama:host"] + "/OAuth_APIM/GenerateToken";
+    x.urlToken = host;
+
+    TokenParams token = builder.Configuration.GetSection("Comfama:token").Get<TokenParams>();
+
+    Dictionary<string, string?>? requestDict = new ModelToDictionary().Trasform<TokenParams>(token);
+    Task<TokenResponse> resp = new Http().GetToken<TokenResponse>(host, token.client_id, requestDict);
+    
+    resp.Wait();
+        
+    x.AccessToken = resp.Result.AccessToken;
+    x.ExpiresIn = resp.Result.ExpiresIn;
 });
 
 var app = builder.Build();
