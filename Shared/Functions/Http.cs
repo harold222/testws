@@ -151,20 +151,20 @@ namespace WSGYG63.Shared.Functions
         //}
 
 
-        public static async Task<Response> PostFromUrl<Response>(string url, object body, string accessToken = null)
+        public async Task<Response> PostFromUrl<Response>(string url, object body, string accessToken = null)
         {
             Response returnObject = default;
             using (HttpClient httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromHours(10);
+
                 if (accessToken != null)
-                {
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-                }
+                    httpClient.DefaultRequestHeaders.Add("access_token", accessToken);
 
                 using HttpResponseMessage response = await httpClient.PostAsJsonAsync(url, body);
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                returnObject = JsonConvert.DeserializeObject<Response>(apiResponse);
+
+                returnObject = Deserialize.Xml<Response>(apiResponse);
             }
 
             return returnObject;
