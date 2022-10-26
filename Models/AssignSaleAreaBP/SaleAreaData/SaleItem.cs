@@ -12,7 +12,7 @@ namespace WSGYG63.Models.AssignSaleAreaBP.SaleAreaData
         [JsonPropertyName("SALES_ORGANIZATION")]
         [XmlElement(ElementName = "SALES_ORGANIZATION")]
         [MaxLength(14, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? SALES_ORGANIZATION { get; set; }
+        public string? SalesOrganization { get; set; }
 
         /// <summary>
         /// Canal de distribucion
@@ -21,7 +21,7 @@ namespace WSGYG63.Models.AssignSaleAreaBP.SaleAreaData
         [JsonPropertyName("DISTRIBUTION_CHANNEL")]
         [XmlElement(ElementName = "DISTRIBUTION_CHANNEL")]
         [MaxLength(2, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? DISTRIBUTION_CHANNEL { get; set; }
+        public string? DistributionChannel { get; set; }
 
         /// <summary>
         /// Sector
@@ -30,7 +30,7 @@ namespace WSGYG63.Models.AssignSaleAreaBP.SaleAreaData
         [JsonPropertyName("DIVISION")]
         [XmlElement(ElementName = "DIVISION")]
         [MaxLength(2, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? DIVISION { get; set; }
+        public string? Division { get; set; }
 
         /// <summary>
         /// Oficina de ventas
@@ -39,7 +39,7 @@ namespace WSGYG63.Models.AssignSaleAreaBP.SaleAreaData
         [JsonPropertyName("SALES_OFFICE")]
         [XmlElement(ElementName = "SALES_OFFICE")]
         [MaxLength(14, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? SALES_OFFICE { get; set; }
+        public string? SalesOffice { get; set; }
 
         /// <summary>
         /// Grupo de vendedores
@@ -48,105 +48,105 @@ namespace WSGYG63.Models.AssignSaleAreaBP.SaleAreaData
         [JsonPropertyName("SALES_GROUP")]
         [XmlElement(ElementName = "SALES_GROUP")]
         [MaxLength(14, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? SALES_GROUP { get; set; }
+        public string? SalesGroup { get; set; }
 
         /// <summary>
-        /// 
+        /// Grupo de clientes
         /// </summary>
         /// <example></example>
         [JsonPropertyName("CUSTOMER_GROUP")]
         [XmlElement(ElementName = "CUSTOMER_GROUP")]
-        [MaxLength(10, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? CUSTOMER_GROUP { get; set; }
+        [MaxLength(2, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
+        public string? CustomerGroup { get; set; }
 
         /// <summary>
-        /// 
+        /// Esquema de cliente
         /// </summary>
         /// <example></example>
         [JsonPropertyName("CUST_PRIC_PROC")]
         [XmlElement(ElementName = "CUST_PRIC_PROC")]
-        [MaxLength(10, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? CUST_PRIC_PROC { get; set; }
+        [MaxLength(1, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
+        public string? CustPricProc { get; set; }
 
         /// <summary>
-        /// 
+        /// Codigo moneda
         /// </summary>
         /// <example></example>
         [JsonPropertyName("CURRENCY")]
         [XmlElement(ElementName = "CURRENCY")]
-        [MaxLength(10, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? CURRENCY { get; set; }
+        [MaxLength(5, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
+        public string? Currenccy { get; set; }
 
         /// <summary>
-        /// 
+        /// Grupo precios del cliente
         /// </summary>
         /// <example></example>
         [JsonPropertyName("PRICE_GROUP")]
         [XmlElement(ElementName = "PRICE_GROUP")]
-        [MaxLength(10, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? PRICE_GROUP { get; set; }
+        [MaxLength(2, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
+        public string? PriceGroup { get; set; }
 
         /// <summary>
-        /// 
+        /// Prioridad de entrega
         /// </summary>
         /// <example></example>
         [JsonPropertyName("DLV_PRIORITY")]
         [XmlElement(ElementName = "DLV_PRIORITY")]
-        [MaxLength(10, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? DLV_PRIORITY { get; set; }
+        [MaxLength(2, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
+        public string? DlvPriority { get; set; }
 
         /// <summary>
-        /// 
+        /// Condiciones de expedicion
         /// </summary>
         /// <example></example>
         [JsonPropertyName("SHIPPING_COND")]
         [XmlElement(ElementName = "SHIPPING_COND")]
-        [MaxLength(10, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? SHIPPING_COND { get; set; }
+        [MaxLength(2, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
+        public string? ShippingCond { get; set; }
 
         /// <summary>
-        /// 
+        /// Grupo de imputacion interlocutor comercial
         /// </summary>
         /// <example></example>
         [JsonPropertyName("ACCOUNT_ASGNGRP")]
         [XmlElement(ElementName = "ACCOUNT_ASGNGRP")]
-        [MaxLength(10, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? ACCOUNT_ASGNGRP { get; set; }
+        [MaxLength(2, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
+        public string? AccountAsgngrp { get; set; }
 
         /// <summary>
-        /// 
+        /// Condiciones de pago
         /// </summary>
         /// <example></example>
         [JsonPropertyName("PAYMENT_TERMS")]
         [XmlElement(ElementName = "PAYMENT_TERMS")]
-        [MaxLength(10, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? PAYMENT_TERMS { get; set; }
+        [MaxLength(4, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
+        public string? PaymentTerms { get; set; }
 
         /// <summary>
-        /// 
+        /// Grupo de clientes 1
         /// </summary>
         /// <example></example>
         [JsonPropertyName("CUSTOMER_GROUP1")]
         [XmlElement(ElementName = "CUSTOMER_GROUP1")]
-        [MaxLength(10, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? CUSTOMER_GROUP1 { get; set; }
+        [MaxLength(3, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
+        public string? CustomerGroup1 { get; set; }
 
         /// <summary>
-        /// 
+        /// Grupo de clientes 2
         /// </summary>
         /// <example></example>
         [JsonPropertyName("CUSTOMER_GROUP2")]
         [XmlElement(ElementName = "CUSTOMER_GROUP2")]
-        [MaxLength(10, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? CUSTOMER_GROUP2 { get; set; }
+        [MaxLength(3, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
+        public string? CustomerGroup2 { get; set; }
 
         /// <summary>
-        /// 
+        /// Control de entrega (posicion)
         /// </summary>
         /// <example></example>
         [JsonPropertyName("PART_DLV_ITM")]
         [XmlElement(ElementName = "PART_DLV_ITM")]
-        [MaxLength(10, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
-        public string? PART_DLV_ITM { get; set; }
+        [MaxLength(1, ErrorMessage = "El maximo de caracteres permitidos para el campo {0} es {1}")]
+        public string? PartDlvItm { get; set; }
     }
 }
