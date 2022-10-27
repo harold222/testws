@@ -15,7 +15,7 @@ namespace WSGYG63.Controllers
         private readonly IConfiguration _config;
         private readonly string complement = "/CuentaBancoBp";
         private TokenParams tokenParams;
-        private readonly GlobalToken currentToken;
+        private GlobalToken currentToken;
 
         public AsignarCuentaBancariaBPController(IConfiguration config, IOptions<GlobalToken> token)
         {

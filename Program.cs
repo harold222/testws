@@ -37,20 +37,35 @@ builder.Services.AddSwaggerGen(opt =>
 builder.Services.Configure<GlobalToken>(async x =>
 {
     string host = builder.Configuration["Comfama:host"] + "/OAuth_APIM/GenerateToken";
-    x.urlToken = host;
+    x.UrlToken = host;
 
     TokenParams token = builder.Configuration.GetSection("Comfama:token").Get<TokenParams>();
 
     Dictionary<string, string?>? requestDict = new ModelToDictionary().Trasform<TokenParams>(token);
+    x.DataToGetToken = requestDict;
+
     Task<TokenResponse> resp = new Http().GetToken<TokenResponse>(host, token.client_id, requestDict);
     
     resp.Wait();
+    
+    if (resp.Result != null)
+    {
+        try
+        {
+            DateTime dateRefresh = DateTime.Now.AddSeconds(Convert.ToDouble(resp.Result.ExpiresIn));
+            x.DateExpire = dateRefresh;
+        }
+        catch (Exception e)
+        {
+            // log de conversion de fecha a expirar e.ToString();
+        }
         
-    x.AccessToken = resp.Result.AccessToken;
-    x.ExpiresIn = resp.Result.ExpiresIn;
+        x.AccessToken = resp.Result.AccessToken;
+        x.ExpiresIn = resp.Result.ExpiresIn;
+    }
 });
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();

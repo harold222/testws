@@ -18,7 +18,7 @@ namespace WSGYG63.Controllers
         private TokenParams tokenParams;
         private readonly string openTagXml = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:urn='urn:sap-com:document:sap:rfc:functions'><soapenv:Header/><soapenv:Body><urn:Z_SDSERVICIOS_CARGA_BP>";
         private readonly string closeTagXml = "<I_TEST></I_TEST></urn:Z_SDSERVICIOS_CARGA_BP></soapenv:Body></soapenv:Envelope>";
-        private readonly GlobalToken currentToken;
+        private GlobalToken currentToken;
 
         public AsignarAreaVentaBPController(IConfiguration config, IOptions<GlobalToken> token)
         {

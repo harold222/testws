@@ -159,11 +159,21 @@ namespace WSGYG63.Shared.Functions
                 httpClient.DefaultRequestHeaders.Add("apikey", apikey);
 
                 httpClient.Timeout = TimeSpan.FromHours(10);
-                dict.Add("Content-Type", "application/x-www-form-urlencoded");
+
+                if (!dict.ContainsKey("Content-Type"))
+                    dict.Add("Content-Type", "application/x-www-form-urlencoded");
 
                 using HttpResponseMessage response = await httpClient.PostAsync(url, new FormUrlEncodedContent(dict));
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                returnObject = JsonConvert.DeserializeObject<Response>(apiResponse);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    returnObject = JsonConvert.DeserializeObject<Response>(apiResponse);
+                }
+                else
+                {
+                    // log guardar apiResponse
+                }
             }
 
             return returnObject;

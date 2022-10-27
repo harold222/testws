@@ -17,7 +17,7 @@ namespace WSGYG63.Controllers
         private TokenParams tokenParams;
         private readonly string openTagXml = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:urn='urn:sap-com:document:sap:rfc:functions'><soapenv:Header/><soapenv:Body><urn:ZFM_CREATE_BP>";
         private readonly string closeTagXml = "</urn:ZFM_CREATE_BP></soapenv:Body></soapenv:Envelope>";
-        private readonly GlobalToken currentToken;
+        private GlobalToken currentToken;
 
         public CreacionBPController(IConfiguration config, IOptions<GlobalToken> token)
         {
