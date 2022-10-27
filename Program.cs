@@ -50,18 +50,8 @@ builder.Services.Configure<GlobalToken>(async x =>
     
     if (resp.Result != null)
     {
-        try
-        {
-            DateTime dateRefresh = DateTime.Now.AddSeconds(Convert.ToDouble(resp.Result.ExpiresIn));
-            x.DateExpire = dateRefresh;
-        }
-        catch (Exception e)
-        {
-            // log de conversion de fecha a expirar e.ToString();
-        }
-        
+        x.DateExpire = new RefreshToken().refresh(resp.Result.ExpiresIn);
         x.AccessToken = resp.Result.AccessToken;
-        x.ExpiresIn = resp.Result.ExpiresIn;
     }
 });
 

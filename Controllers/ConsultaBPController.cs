@@ -16,7 +16,7 @@ namespace WSGYG63.Controllers
         private readonly string complement = "/ConsultaBP/ObtenerDataBPSet";
         private ModelToDictionary toDict = new();
         private TokenParams tokenParams;
-        private GlobalToken currentToken;
+        private GlobalToken currentToken = new();
 
         public ConsultaBPController(IConfiguration config, IOptions<GlobalToken> token)
         {
@@ -36,61 +36,24 @@ namespace WSGYG63.Controllers
                 // cuando tenga acceso a hacerle peticiones a los 6 endpoints revisar que me devuelven
                 // con un token que no funciona, para volver a intentarla peticion, con un nuevo token
 
-                bool successToken = false;
+                GlobalToken? newOrCurrentToken = await new RefreshToken().verify(
+                    this.url,
+                    this.tokenParams,
+                    this.currentToken?.UrlToken,
+                    this.currentToken?.AccessToken,
+                    this.currentToken?.DateExpire,
+                    this.currentToken?.DataToGetToken).ConfigureAwait(false);
 
-                if (!string.IsNullOrEmpty(this.currentToken?.AccessToken))
+                if (newOrCurrentToken != null)
                 {
-                    bool expiredToken = new CheckDate().IsExpired(this.currentToken.DateExpire);
-
-                    if (expiredToken)
+                    if (this.currentToken?.AccessToken != newOrCurrentToken.AccessToken)
                     {
-                        TokenResponse newToken = await http.GetToken<TokenResponse>(this.currentToken.UrlToken, this.tokenParams.client_id, this.currentToken.DataToGetToken).ConfigureAwait(false);
-
-                        if (newToken != null)
-                        {
-                            try
-                            {
-                                DateTime dateRefresh = DateTime.Now.AddSeconds(Convert.ToDouble(newToken.ExpiresIn));
-                                this.currentToken.DateExpire = dateRefresh;
-                            }
-                            catch (Exception e)
-                            {
-                                // log de conversion de fecha a expirar e.ToString();
-                            }
-
-                            successToken = true;
-                            this.currentToken.AccessToken = newToken.AccessToken;
-                            this.currentToken.ExpiresIn = newToken.ExpiresIn;
-                        }
+                        this.currentToken.AccessToken = newOrCurrentToken.AccessToken;
+                        this.currentToken.UrlToken = newOrCurrentToken.UrlToken;
+                        this.currentToken.DataToGetToken = newOrCurrentToken.DataToGetToken;
+                        this.currentToken.DateExpire = newOrCurrentToken.DateExpire;
                     }
-                    else
-                        successToken = true;
-                }
-                else
-                {
-                    Dictionary<string, string> data =
-                            this.currentToken?.DataToGetToken == null ?
-                            new ModelToDictionary().Trasform<TokenParams>(this.tokenParams) :
-                            this.currentToken.DataToGetToken;
-
-                    string urlToken = string.IsNullOrEmpty(this.currentToken?.UrlToken) ?
-                        $"{this.url}/OAuth_APIM/GenerateToken" :
-                        this.currentToken.UrlToken;
-
-                    TokenResponse newToken = await http.GetToken<TokenResponse>(urlToken, this.tokenParams.client_id, data).ConfigureAwait(false);
-
-                    if (newToken != null)
-                    {
-                        successToken = true;
-                        this.currentToken.UrlToken = urlToken;
-                        this.currentToken.AccessToken = newToken.AccessToken;
-                        this.currentToken.DataToGetToken = data;
-                        this.currentToken.ExpiresIn = newToken.ExpiresIn;
-                    }
-                }
-
-                if (successToken)
-                {
+                    
                     Dictionary<string, string?>? requestDict = this.toDict.Trasform<QueryBPRequest>(request);
                     QueryBPResponse? response = await http.GETAsync<QueryBPResponse, QueryBPRequest>(this.url, this.tokenParams.client_id, requestDict, this.currentToken.AccessToken).ConfigureAwait(false);
                     return Ok(response);

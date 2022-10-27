@@ -8,8 +8,6 @@
 
         public string AccessToken { get; set; }
 
-        public string ExpiresIn { get; set; }
-
-        public DateTime DateExpire { get; set; }
+        public DateTime? DateExpire { get; set; }
     }
 }

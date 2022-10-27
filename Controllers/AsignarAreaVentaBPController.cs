@@ -18,7 +18,7 @@ namespace WSGYG63.Controllers
         private TokenParams tokenParams;
         private readonly string openTagXml = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:urn='urn:sap-com:document:sap:rfc:functions'><soapenv:Header/><soapenv:Body><urn:Z_SDSERVICIOS_CARGA_BP>";
         private readonly string closeTagXml = "<I_TEST></I_TEST></urn:Z_SDSERVICIOS_CARGA_BP></soapenv:Body></soapenv:Envelope>";
-        private GlobalToken currentToken;
+        private GlobalToken currentToken = new();
 
         public AsignarAreaVentaBPController(IConfiguration config, IOptions<GlobalToken> token)
         {
@@ -43,9 +43,30 @@ namespace WSGYG63.Controllers
                     });
                 }
 
-                string requestXml = Deserialize.Serialize<AssignSaleAreaBPRequest>(request, this.openTagXml, this.closeTagXml);
-                AssignSaleAreaBPResponse response = await http.postXMLData<AssignSaleAreaBPResponse>(this.url, this.tokenParams.client_id, requestXml, AuthorizationEnum.ACCES_TOKEN).ConfigureAwait(false);
-                return Ok(response);
+                GlobalToken? newOrCurrentToken = await new RefreshToken().verify(
+                    this.url,
+                    this.tokenParams,
+                    this.currentToken?.UrlToken,
+                    this.currentToken?.AccessToken,
+                    this.currentToken?.DateExpire,
+                    this.currentToken?.DataToGetToken).ConfigureAwait(false);
+
+                if (newOrCurrentToken != null)
+                {
+                    if (this.currentToken?.AccessToken != newOrCurrentToken.AccessToken)
+                    {
+                        this.currentToken.AccessToken = newOrCurrentToken.AccessToken;
+                        this.currentToken.UrlToken = newOrCurrentToken.UrlToken;
+                        this.currentToken.DataToGetToken = newOrCurrentToken.DataToGetToken;
+                        this.currentToken.DateExpire = newOrCurrentToken.DateExpire;
+                    }
+
+                    string requestXml = Deserialize.Serialize<AssignSaleAreaBPRequest>(request, this.openTagXml, this.closeTagXml);
+                    AssignSaleAreaBPResponse response = await http.postXMLData<AssignSaleAreaBPResponse>(this.url, this.tokenParams.client_id, requestXml, AuthorizationEnum.ACCES_TOKEN, this.currentToken.AccessToken).ConfigureAwait(false);
+                    return Ok(response);
+                }
+                else
+                    return StatusCode(500);
             }
             catch (Exception e)
             {

@@ -2,7 +2,7 @@
 {
     public class CheckDate
     {
-        public bool IsExpired(DateTime expired)
+        public bool IsExpired(DateTime? expired)
         {
             bool success = false;
 
@@ -10,7 +10,7 @@
             {
                 try
                 {
-                    double seconds = (expired - DateTime.Now).TotalSeconds - 60;
+                    double seconds = ((DateTime)expired - DateTime.Now).TotalSeconds - 60;
                     success = seconds < 0 ? true : false;
                 }
                 catch (Exception e) // error en verificar tiempo, refresco token

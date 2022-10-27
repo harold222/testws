@@ -15,7 +15,7 @@ namespace WSGYG63.Controllers
         private readonly IConfiguration _config;
         private readonly string complement = "/CuentaBancoBp";
         private TokenParams tokenParams;
-        private GlobalToken currentToken;
+        private GlobalToken currentToken = new();
 
         public AsignarCuentaBancariaBPController(IConfiguration config, IOptions<GlobalToken> token)
         {
@@ -32,8 +32,21 @@ namespace WSGYG63.Controllers
 
             try
             {
-                AssignBankAccountBPResponse response = await http.PostFromUrl<AssignBankAccountBPResponse>(this.url, request);
-                return Ok(response);
+                GlobalToken? newOrCurrentToken = await new RefreshToken().verify(
+                    this.url,
+                    this.tokenParams,
+                    this.currentToken?.UrlToken,
+                    this.currentToken?.AccessToken,
+                    this.currentToken?.DateExpire,
+                    this.currentToken?.DataToGetToken).ConfigureAwait(false);
+
+                if (newOrCurrentToken != null)
+                {
+                    AssignBankAccountBPResponse response = await http.PostFromUrl<AssignBankAccountBPResponse>(this.url, request, this.currentToken.AccessToken);
+                    return Ok(response);
+                }
+                else
+                    return StatusCode(500);
             }
             catch (Exception e)
             {
