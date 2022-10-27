@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using WSGYG63.Models.AssignSaleAreaBP;
 using WSGYG63.Models.Token;
 using WSGYG63.Shared.Enums;

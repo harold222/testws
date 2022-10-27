@@ -42,6 +42,14 @@ namespace WSGYG63.Controllers
 
                 if (newOrCurrentToken != null)
                 {
+                    if (this.currentToken?.AccessToken != newOrCurrentToken.AccessToken)
+                    {
+                        this.currentToken.AccessToken = newOrCurrentToken.AccessToken;
+                        this.currentToken.UrlToken = newOrCurrentToken.UrlToken;
+                        this.currentToken.DataToGetToken = newOrCurrentToken.DataToGetToken;
+                        this.currentToken.DateExpire = newOrCurrentToken.DateExpire;
+                    }
+
                     AssignBankAccountBPResponse response = await http.PostFromUrl<AssignBankAccountBPResponse>(this.url, request, this.currentToken.AccessToken);
                     return Ok(response);
                 }
