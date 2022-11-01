@@ -17,12 +17,14 @@ namespace WSGYG63.Controllers
         private ModelToDictionary toDict = new();
         private TokenParams tokenParams;
         private GlobalToken currentToken = new();
+        private string rutaI { get; set; }
 
         public ConsultaBPController(IConfiguration config, IOptions<GlobalToken> token)
         {
             this._config = config;
             this.url = this._config.GetSection("Comfama:host").Value + complement;
             this.tokenParams = this._config.GetSection("Comfama:token").Get<TokenParams>();
+            this.rutaI = this._config.GetSection("Comfama:RutaI").Value;
             this.currentToken = token.Value;
         }
 
@@ -31,6 +33,7 @@ namespace WSGYG63.Controllers
         {
             Http http = new();
 
+            
             try
             {
                 // cuando tenga acceso a hacerle peticiones a los 6 endpoints revisar que me devuelven
