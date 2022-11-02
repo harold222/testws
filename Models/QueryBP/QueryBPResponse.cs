@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace WSGYG63.Models.QueryBP
 {
 
-    [XmlRoot(ElementName = "properties")]
+    [Serializable, XmlRoot(ElementName = "properties")]
     public class QueryBPResponse
     {
         [XmlElement(ElementName = "Type")]

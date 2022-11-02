@@ -3,6 +3,8 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using WSGYG63.Models.QueryBP;
 using WSGYG63.Models.Token;
 using WSGYG63.Shared.Enums;
@@ -34,6 +36,37 @@ namespace WSGYG63.Controllers
         [HttpGet]
         public async Task<IActionResult> index([FromQuery] QueryBPRequest request)
         {
+
+            try
+            {
+                //string text = "<entry><title type='text'>ObtenerDataBPSet()</title><updated>2022-11-02</updated><category term=' schema='/><link href='ObtenerDataBPSet()' rel='self' title='obtenerDataBP'><content type='application/xml'><properties><Type/><NumberId/><Bpartner/><NameFirst/><NameSecond/><FirstLastname/><d:SecondLastname/><PostalCode/><Country/><Region/><City/><District/><Street/><Genero/><Birthdate/><CivilSt/><Email/><TelNumber/><MobilePhone/><MENSAJE/></properties></content></entry>";
+
+                string text = "<m:properties><d:Type/><d:NumberId/><d:Bpartner/><d:NameFirst/><d:NameSecond/><d:FirstLastname/><d:SecondLastname/><d:PostalCode/><d:Country/><d:Region/><d:City/><d:District/><d:Street/><d:Genero/><d:Birthdate/><d:CivilSt/><d:Email/><d:TelNumber/><d:MobilePhone/><d:MENSAJE/></m:properties>";
+
+
+                string output = Regex.Replace(text, @"(<\s*\/?)\s*(\w+):(\w+)", "$1$3");
+
+
+                QueryBPResponse a = Deserialize.Xml<QueryBPResponse>(output);
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
             Http http = new();
             StringBuilder log = new StringBuilder();
             log.Append($"Entrada controlador: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss:ffff")}");
