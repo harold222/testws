@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
 using WSGYG63.Models.AssignBankAccountBP;
@@ -59,7 +58,7 @@ namespace WSGYG63.Controllers
                         this.currentToken.DateExpire = newOrCurrentToken.DateExpire;
                     }
 
-                    log.Append($"\nTrama envio: {JsonConvert.SerializeObject(request)}");
+                    log.Append($"{Environment.NewLine}Trama envio: {JsonConvert.SerializeObject(request)}");
 
                     AssignBankAccountBPResponse response = await http.PostFromUrl<AssignBankAccountBPResponse>(this.url, request, this.tokenParams.client_id, log, this.currentToken.AccessToken);
                     
@@ -71,7 +70,7 @@ namespace WSGYG63.Controllers
                     }
                     else
                     {
-                        log.Append("\nSalida controlador");
+                        log.Append($"{Environment.NewLine}Salida controlador");
                         Log.write(log.ToString(), this.rutaI, ControllersNames.AssignBank);
                         log.Clear();
 
@@ -80,7 +79,7 @@ namespace WSGYG63.Controllers
                 }
                 else
                 {
-                    log.Append("\nSalida controlador");
+                    log.Append($"{Environment.NewLine}Salida controlador");
                     Log.write(log.ToString(), this.rutaI, ControllersNames.AssignBank);
                     log.Clear();
 
@@ -89,7 +88,7 @@ namespace WSGYG63.Controllers
             }
             catch (Exception e)
             {
-                log.Append("\n" + e.ToString());
+                log.Append(Environment.NewLine + e.ToString());
                 Log.write(log.ToString(), this.rutaI, ControllersNames.AssignBank);
                 log.Clear();
 

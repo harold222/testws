@@ -60,10 +60,10 @@ namespace WSGYG63.Controllers
                     }
 
                     string requestXml = Deserialize.Serialize<CreateBPrequest>(request, this.openTagXml, this.closeTagXml);
-                    log.Append($"\nTrama envio: \n{requestXml}");
+                    log.Append($"{Environment.NewLine}Trama envio: {Environment.NewLine}{requestXml}");
 
                     CreateBPResponse response = await http.postXMLData<CreateBPResponse>(this.url, this.tokenParams.client_id, requestXml, AuthorizationEnum.AUTHORIZATION, this.currentToken.AccessToken).ConfigureAwait(false);
-                    log.Append($"\nTrama regreso: {JsonConvert.SerializeObject(response)}");
+                    log.Append($"{Environment.NewLine}Trama regreso: {JsonConvert.SerializeObject(response)}");
 
                     Log.write(log.ToString(), this.rutaI, ControllersNames.Create);
                     log.Clear();
@@ -71,7 +71,7 @@ namespace WSGYG63.Controllers
                 }
                 else
                 {
-                    log.Append("\nSalida controlador");
+                    log.Append($"{Environment.NewLine}Salida controlador");
                     Log.write(log.ToString(), this.rutaI, ControllersNames.Create);
                     log.Clear();
                     return StatusCode(500);
@@ -79,7 +79,7 @@ namespace WSGYG63.Controllers
             }
             catch (Exception e)
             {
-                log.Append("\n" + e.ToString());
+                log.Append(Environment.NewLine + e.ToString());
                 Log.write(log.ToString(), this.rutaI, ControllersNames.Create);
                 log.Clear();
                 return StatusCode(500);
