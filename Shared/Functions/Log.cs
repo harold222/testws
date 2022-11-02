@@ -2,7 +2,7 @@
 {
     public class Log
     {
-        public static void write(string data, string path, string nameController, bool initLog = false, bool finalLog = false)
+        public static void write(string data, string path, string nameController)
         {
             string appPath = $"{path}\\DOCUMENTOS\\LOGS\\";
             StreamWriter writer = null;
@@ -10,17 +10,12 @@
             try
             {
                 writer = new StreamWriter(appPath + "LOG_WSGYG63_" + DateTime.Now.ToString("yyyy-MM-dd") + ".txt", true);
+                writer.WriteLine("************************************************************************************************************************");
 
-                if (initLog)
-                    writer.WriteLine("************************************************************************************************************************");
-                else
-                    writer.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - - -");
-
-                writer.WriteLine("Fecha: " + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss:ffff"));
+                writer.WriteLine($"Servicio actual: {nameController}");
                 writer.WriteLine(data);
 
-                if (finalLog)
-                    writer.WriteLine("************************************************************************************************************************");
+                writer.WriteLine("************************************************************************************************************************");
 
                 writer.Flush();
             }

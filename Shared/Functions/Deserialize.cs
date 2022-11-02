@@ -16,6 +16,7 @@ namespace WSGYG63.Shared.Functions
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.OmitXmlDeclaration = true;
+            settings.Indent = true;
 
             using XmlWriter writer = XmlWriter.Create(stringWriter, settings);
 

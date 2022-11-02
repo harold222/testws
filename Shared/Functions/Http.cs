@@ -26,7 +26,6 @@ namespace WSGYG63.Shared.Functions
 
             HttpWebResponse response = (HttpWebResponse)await web.GetResponseAsync().ConfigureAwait(false);
 
-            // Get the stream associated with the response.
             Stream stream = response.GetResponseStream();
 
             Encoding encoding = Encoding.Default;
@@ -70,7 +69,6 @@ namespace WSGYG63.Shared.Functions
             Stream requestStream = web.GetRequestStream();
             requestStream.Write(bytes, 0, bytes.Length);
             requestStream.Close();
-
 
             HttpWebResponse response = (HttpWebResponse)await web.GetResponseAsync().ConfigureAwait(false);
             Stream responseStream = response.GetResponseStream();
@@ -150,7 +148,7 @@ namespace WSGYG63.Shared.Functions
         //    return xDoc;
         //}
 
-        public async Task<Response> GetToken<Response>(string url, string apikey, IDictionary<string, string> dict)
+        public async Task<Response> GetToken<Response>(string url, string apikey, IDictionary<string, string> dict, StringBuilder? log = null)
         {
             Response returnObject = default;
             using (HttpClient httpClient = new HttpClient())
@@ -169,17 +167,34 @@ namespace WSGYG63.Shared.Functions
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     returnObject = JsonConvert.DeserializeObject<Response>(apiResponse);
+
+                    if (log != null)
+                        log.Append($"\nTrama respuesta token = {apiResponse}");
                 }
                 else
                 {
-                    // log guardar apiResponse
+                    if (log != null)
+                    {
+                        try
+                        {
+                            string apiResponse = await response.Content.ReadAsStringAsync();
+                            log.Append($"\nTrama respuesta token = {apiResponse}");
+                        }
+                        catch (Exception e)
+                        {
+                            if (response != null)
+                                log.Append($"\nError get token: {e.Message.ToString()}");
+                            else
+                                log.Append($"\nError get token: {e.Message.ToString()} - status: {response.StatusCode}");
+                        }
+                    }
                 }
             }
 
             return returnObject;
         }
 
-        public async Task<Response> PostFromUrl<Response>(string url, object body, string accessToken = null)
+        public async Task<Response> PostFromUrl<Response>(string url, object body, string apiKey, StringBuilder log, string accessToken = null)
         {
             Response returnObject = default;
             using (HttpClient httpClient = new HttpClient())
@@ -189,10 +204,31 @@ namespace WSGYG63.Shared.Functions
                 if (accessToken != null)
                     httpClient.DefaultRequestHeaders.Add("access_token", accessToken);
 
-                using HttpResponseMessage response = await httpClient.PostAsJsonAsync(url, body);
-                string apiResponse = await response.Content.ReadAsStringAsync();
+                httpClient.DefaultRequestHeaders.Add("apikey", apiKey);
 
-                returnObject = Deserialize.Xml<Response>(apiResponse);
+                using HttpResponseMessage response = await httpClient.PostAsJsonAsync(url, body);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    log.Append($"\nTrama respuesta: {apiResponse}");
+                    returnObject = Deserialize.Xml<Response>(apiResponse);
+                }
+                else
+                {
+                    try
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        log.Append($"\nTrama respuesta: {apiResponse}");
+                    }
+                    catch (Exception e)
+                    {
+                        if (response != null)
+                            log.Append($"\nError get token: {e.Message.ToString()}");
+                        else
+                            log.Append($"\nError get token: {e.Message.ToString()} - status: {response.StatusCode}");
+                    }
+                }
             }
 
             return returnObject;

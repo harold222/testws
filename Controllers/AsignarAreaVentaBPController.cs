@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System.Text;
 using WSGYG63.Models.AssignSaleAreaBP;
 using WSGYG63.Models.Token;
 using WSGYG63.Shared.Enums;
@@ -18,12 +20,14 @@ namespace WSGYG63.Controllers
         private readonly string openTagXml = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:urn='urn:sap-com:document:sap:rfc:functions'><soapenv:Header/><soapenv:Body><urn:Z_SDSERVICIOS_CARGA_BP>";
         private readonly string closeTagXml = "<I_TEST></I_TEST></urn:Z_SDSERVICIOS_CARGA_BP></soapenv:Body></soapenv:Envelope>";
         private GlobalToken currentToken = new();
+        private string rutaI { get; set; }
 
         public AsignarAreaVentaBPController(IConfiguration config, IOptions<GlobalToken> token)
         {
             this._config = config;
             this.url = this._config.GetSection("Comfama:host").Value + complement;
             this.tokenParams = this._config.GetSection("Comfama:token").Get<TokenParams>();
+            this.rutaI = this._config.GetSection("Comfama:RutaI").Value;
             this.currentToken = token.Value;
         }
 
@@ -31,6 +35,9 @@ namespace WSGYG63.Controllers
         public async Task<IActionResult> Index([FromBody] AssignSaleAreaBPRequest request)
         {
             Http http = new();
+            StringBuilder log = new();
+            log.Append($"Entrada controlador: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss:ffff")}");
+
             try
             { 
                 if (request.item?.Count > 0)
@@ -45,6 +52,7 @@ namespace WSGYG63.Controllers
                 GlobalToken? newOrCurrentToken = await new RefreshToken().verify(
                     this.url,
                     this.tokenParams,
+                    log,
                     this.currentToken?.UrlToken,
                     this.currentToken?.AccessToken,
                     this.currentToken?.DateExpire,
@@ -61,15 +69,30 @@ namespace WSGYG63.Controllers
                     }
 
                     string requestXml = Deserialize.Serialize<AssignSaleAreaBPRequest>(request, this.openTagXml, this.closeTagXml);
+                    log.Append($"\nTrama envio: \n{requestXml}");
+
                     AssignSaleAreaBPResponse response = await http.postXMLData<AssignSaleAreaBPResponse>(this.url, this.tokenParams.client_id, requestXml, AuthorizationEnum.ACCES_TOKEN, this.currentToken.AccessToken).ConfigureAwait(false);
+                    log.Append($"\nTrama regreso: {JsonConvert.SerializeObject(response)}");
+
+                    Log.write(log.ToString(), this.rutaI, ControllersNames.AssignSaleArea);
+                    log.Clear();
                     return Ok(response);
                 }
                 else
+                {
+                    log.Append("\nSalida controlador");
+                    Log.write(log.ToString(), this.rutaI, ControllersNames.AssignSaleArea);
+                    log.Clear();
+
                     return StatusCode(500);
+                }
             }
             catch (Exception e)
             {
-                // escribir en log
+                log.Append("\n" + e.ToString());
+                Log.write(log.ToString(), this.rutaI, ControllersNames.AssignSaleArea);
+                log.Clear();
+
                 return StatusCode(500);
             }
         }

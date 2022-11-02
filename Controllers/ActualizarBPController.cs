@@ -3,6 +3,8 @@ using WSGYG63.Models.Token;
 using WSGYG63.Shared.Functions;
 using WSGYG63.Shared.Enums;
 using Microsoft.Extensions.Options;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace WSGYG63.Controllers
 {
@@ -18,12 +20,14 @@ namespace WSGYG63.Controllers
         private readonly string openTagXml = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:urn='urn:sap-com:document:sap:rfc:functions'><soapenv:Header/><soapenv:Body><urn:ZFM_ACTUALIZAR_BPDATOSGENER>";
         private readonly string closeTagXml = "</urn:ZFM_ACTUALIZAR_BPDATOSGENER></soapenv:Body></soapenv:Envelope>";
         private GlobalToken currentToken = new();
+        private string rutaI { get; set; }
 
         public ActualizarBPController(IConfiguration config, IOptions<GlobalToken> token)
         {
             this._config = config;
             this.url = this._config.GetSection("Comfama:host").Value + complement;
             this.tokenParams = this._config.GetSection("Comfama:token").Get<TokenParams>();
+            this.rutaI = this._config.GetSection("Comfama:RutaI").Value;
             this.currentToken = token.Value;
         }
 
@@ -31,11 +35,15 @@ namespace WSGYG63.Controllers
         public async Task<IActionResult> index([FromBody] UpdateBPRequest request)
         {
             Http http = new();
+            StringBuilder log = new();
+            log.Append($"Entrada controlador: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss:ffff")}");
+
             try
             {
                 GlobalToken? newOrCurrentToken = await new RefreshToken().verify(
                     this.url,
                     this.tokenParams,
+                    log,
                     this.currentToken?.UrlToken,
                     this.currentToken?.AccessToken,
                     this.currentToken?.DateExpire,
@@ -52,15 +60,31 @@ namespace WSGYG63.Controllers
                     }
 
                     string requestXml = Deserialize.Serialize<UpdateBPRequest>(request, this.openTagXml, this.closeTagXml);
+                    log.Append($"\nTrama envio: \n{requestXml}");
+
                     UpdateBPResponse response = await http.postXMLData<UpdateBPResponse>(this.url, this.tokenParams.client_id, requestXml, AuthorizationEnum.ACCES_TOKEN, this.currentToken.AccessToken).ConfigureAwait(false);
+                    log.Append($"\nTrama regreso: {JsonConvert.SerializeObject(response)}");
+
+                    Log.write(log.ToString(), this.rutaI, ControllersNames.Update);
+                    log.Clear();
+
                     return Ok(response);
                 }
                 else
+                {
+                    log.Append("\nSalida controlador");
+                    Log.write(log.ToString(), this.rutaI, ControllersNames.Update);
+                    log.Clear();
+
                     return StatusCode(500);
+                }
             }
             catch (Exception e)
             {
-                // escribir en log
+                log.Append("\n" + e.ToString());
+                Log.write(log.ToString(), this.rutaI, ControllersNames.Update);
+                log.Clear();
+
                 return StatusCode(500);
             }
         }

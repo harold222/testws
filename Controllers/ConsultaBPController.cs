@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System.Reflection;
+using System.Text;
 using WSGYG63.Models.QueryBP;
 using WSGYG63.Models.Token;
+using WSGYG63.Shared.Enums;
 using WSGYG63.Shared.Functions;
 
 namespace WSGYG63.Controllers
@@ -32,8 +35,9 @@ namespace WSGYG63.Controllers
         public async Task<IActionResult> index([FromQuery] QueryBPRequest request)
         {
             Http http = new();
+            StringBuilder log = new StringBuilder();
+            log.Append($"Entrada controlador: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss:ffff")}");
 
-            
             try
             {
                 // cuando tenga acceso a hacerle peticiones a los 6 endpoints revisar que me devuelven
@@ -42,6 +46,7 @@ namespace WSGYG63.Controllers
                 GlobalToken? newOrCurrentToken = await new RefreshToken().verify(
                     this.url,
                     this.tokenParams,
+                    log,
                     this.currentToken?.UrlToken,
                     this.currentToken?.AccessToken,
                     this.currentToken?.DateExpire,
@@ -58,15 +63,30 @@ namespace WSGYG63.Controllers
                     }
                     
                     Dictionary<string, string?>? requestDict = this.toDict.Trasform<QueryBPRequest>(request);
+                    log.Append($"\nTrama envio: {JsonConvert.SerializeObject(request)}");
+                    
                     QueryBPResponse? response = await http.GETAsync<QueryBPResponse, QueryBPRequest>(this.url, this.tokenParams.client_id, requestDict, this.currentToken.AccessToken).ConfigureAwait(false);
+                    log.Append($"\nTrama regreso: {JsonConvert.SerializeObject(response)}");
+
+                    Log.write(log.ToString(), this.rutaI, ControllersNames.Query);
+                    log.Clear();
                     return Ok(response);
                 }
                 else
+                {
+                    log.Append("\nSalida controlador");
+                    Log.write(log.ToString(), this.rutaI, ControllersNames.Query);
+                    log.Clear();
                     return StatusCode(500);
+                }
             }
             catch (Exception e)
             {
-                // escribir en log
+                log.Append("\n" + e.ToString());
+                
+                Log.write(log.ToString(), this.rutaI, ControllersNames.Query);
+                // clean memory
+                log.Clear();
                 return StatusCode(500);
             }
         }

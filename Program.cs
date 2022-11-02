@@ -5,7 +5,7 @@ using WSGYG63.Models.Token;
 using WSGYG63.Shared.Functions;
 
 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder? builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
