@@ -29,8 +29,8 @@ namespace WSGYG63.Controllers
             this.currentToken = token.Value;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> index([FromQuery] QueryBPRequest request)
+        [HttpPost]
+        public async Task<IActionResult> index([FromBody] QueryBPRequest request)
         {
             Http http = new();
             StringBuilder log = new StringBuilder();
