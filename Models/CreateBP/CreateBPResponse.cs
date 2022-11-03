@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace WSGYG63.Models.CreateBP
 {
-    [XmlRoot(ElementName = "I_ES_DATA_BP")]
+    [XmlRoot(ElementName = "E_S_DATA")]
     public class CreateBPResponse
     {
         [JsonPropertyName("BPARTNER")]

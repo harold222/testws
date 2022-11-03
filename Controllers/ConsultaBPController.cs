@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using WSGYG63.Models.QueryBP;
 using WSGYG63.Models.Token;
 using WSGYG63.Shared.Enums;
@@ -36,36 +32,6 @@ namespace WSGYG63.Controllers
         [HttpGet]
         public async Task<IActionResult> index([FromQuery] QueryBPRequest request)
         {
-
-            try
-            {
-                string text = "<entry><title type='text'>ObtenerDataBPSet()</title><updated>2022-11-02</updated><category term=' schema='/><link href='ObtenerDataBPSet()' rel='self' title='obtenerDataBP'/><content type='application/xml'><m:properties><d:Type></d:Type><d:NumberId></d:NumberId><d:Bpartner></d:Bpartner><d:NameFirst></d:NameFirst><d:NameSecond/><d:FirstLastname></d:FirstLastname><d:SecondLastname></d:SecondLastname><d:PostalCode/><d:Country></d:Country><d:Region></d:Region><d:City></d:City><d:District/><d:Street></d:Street><d:Genero></d:Genero><d:Birthdate></d:Birthdate><d:CivilSt></d:CivilSt><d:Email></d:Email><d:TelNumber></d:TelNumber><d:MobilePhone/><d:MENSAJE/></m:properties></content></entry>";
-
-
-                string output = Regex.Replace(text, @"(<\s*\/?)\s*(\w+):(\w+)", "$1$3");
-
-                XDocument xdoc = XDocument.Parse(output);
-
-                IEnumerable<XElement>? specificTag = xdoc.Descendants("properties");
-
-                if (specificTag.Count() > 0)
-                {
-                    output = specificTag.First().ToString(SaveOptions.DisableFormatting);
-                }
-
-                QueryBPResponse a = Deserialize.Xml<QueryBPResponse>(output);
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
-
-
-
-
-
-
             Http http = new();
             StringBuilder log = new StringBuilder();
             log.Append($"Entrada controlador: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss:ffff")}");
@@ -97,7 +63,7 @@ namespace WSGYG63.Controllers
                     Dictionary<string, string?>? requestDict = this.toDict.Trasform<QueryBPRequest>(request);
                     log.Append($"{Environment.NewLine}Trama envio: {JsonConvert.SerializeObject(request)}");
                     
-                    QueryBPResponse? response = await http.GETAsync<QueryBPResponse, QueryBPRequest>(this.url, this.tokenParams.client_id, requestDict, this.currentToken.AccessToken).ConfigureAwait(false);
+                    QueryBPResponse? response = await http.GETAsync<QueryBPResponse, QueryBPRequest>(this.url, this.tokenParams.client_id, requestDict, this.currentToken.AccessToken, "properties").ConfigureAwait(false);
                     log.Append($"{Environment.NewLine}Trama regreso: {JsonConvert.SerializeObject(response)}");
 
                     Log.write(log.ToString(), this.rutaI, ControllersNames.Query);

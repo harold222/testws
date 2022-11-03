@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using WSGYG63.Models.CreateBP;
 using WSGYG63.Models.Token;
 using WSGYG63.Shared.Enums;
@@ -62,7 +64,19 @@ namespace WSGYG63.Controllers
                     string requestXml = Deserialize.Serialize<CreateBPrequest>(request, this.openTagXml, this.closeTagXml);
                     log.Append($"{Environment.NewLine}Trama envio: {Environment.NewLine}{requestXml}");
 
-                    CreateBPResponse response = await http.postXMLData<CreateBPResponse>(this.url, this.tokenParams.client_id, requestXml, AuthorizationEnum.AUTHORIZATION, this.currentToken.AccessToken).ConfigureAwait(false);
+                    CreateBPResponse response = await http.postXMLData<CreateBPResponse>(
+                        this.url,
+                        this.tokenParams.client_id,
+                        requestXml,
+                        AuthorizationEnum.AUTHORIZATION,
+                        this.currentToken.AccessToken,
+                        "E_S_DATA",
+                        new List<string>
+                        {
+                            "soap-env"
+                        }
+                    ).ConfigureAwait(false);
+
                     log.Append($"{Environment.NewLine}Trama regreso: {JsonConvert.SerializeObject(response)}");
 
                     Log.write(log.ToString(), this.rutaI, ControllersNames.Create);

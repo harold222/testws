@@ -3,14 +3,16 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
+using System.Xml.Linq;
 using WSGYG63.Shared.Enums;
 
 namespace WSGYG63.Shared.Functions
 {
     public class Http
     {
-        public async Task<TResponse> GETAsync<TResponse, TRequest>(string url, string apiKey, IDictionary<string, string>? dict = null, string? accessToken = null)
+        public async Task<TResponse> GETAsync<TResponse, TRequest>(string url, string apiKey, IDictionary<string, string>? dict = null, string? accessToken = null, string searchTag = "")
         {
             if (dict != null)
                 url += QueryString(dict);
@@ -30,7 +32,7 @@ namespace WSGYG63.Shared.Functions
 
             Encoding encoding = Encoding.Default;
             ContentType contentType = new ContentType(response.Headers[HttpResponseHeader.ContentType]);
-            
+
             if (!string.IsNullOrEmpty(contentType.CharSet))
                 encoding = Encoding.GetEncoding(contentType.CharSet);
 
@@ -40,10 +42,28 @@ namespace WSGYG63.Shared.Functions
                 text = await reader.ReadToEndAsync().ConfigureAwait(false);
             }
 
+            if (!string.IsNullOrEmpty(searchTag))
+            {
+                try
+                {
+                    // remove attributes in tag example = m:properties -> properties
+                    text = Regex.Replace(text, @"(<\s*\/?)\s*(\w+):(\w+)", "$1$3");
+
+                    XDocument xdoc = XDocument.Parse(text);
+
+                    // get tag inside other tags
+                    IEnumerable<XElement>? specificTag = xdoc.Descendants(searchTag);
+
+                    if (specificTag.Count() > 0)
+                        text = specificTag.First().ToString(SaveOptions.DisableFormatting);
+                }
+                catch (Exception e){}
+            }
+
             return Deserialize.Xml<TResponse>(text);
         }
 
-        public async Task<TResponse> postXMLData<TResponse>(string url, string apiKey, string requestXml, AuthorizationEnum typeAuth,string? accessToken = null)
+        public async Task<TResponse> postXMLData<TResponse>(string url, string apiKey, string requestXml, AuthorizationEnum typeAuth,string? accessToken = null, string? searchTag = "", List<string>? specifPrefix = null)
         {
             HttpWebRequest web = (HttpWebRequest)WebRequest.Create(url);
             byte[] bytes = Encoding.ASCII.GetBytes(requestXml);
@@ -74,6 +94,34 @@ namespace WSGYG63.Shared.Functions
             Stream responseStream = response.GetResponseStream();
             // Get response in XML
             string responseStr = new StreamReader(responseStream).ReadToEnd();
+
+            try
+            {
+                if (specifPrefix != null)
+                {
+                    specifPrefix.ForEach(@namespace =>
+                    {
+                        // remove specific prefix tag example = soap-env:body -> body
+                        responseStr = Regex.Replace(responseStr, $@"((?<=\</|\<){@namespace}:|xmlns:{@namespace}=""[^""]+"")", "");
+                    });
+                }
+                
+                if (!string.IsNullOrEmpty(searchTag))
+                {
+                    // remove all prefixes in tags example = n0:head -> head
+                    responseStr = Regex.Replace(responseStr, @"(<\s*\/?)\s*(\w+):(\w+)", "$1$3");
+
+                    XDocument xdoc = XDocument.Parse(responseStr);
+
+                    // get tag inside other tags
+                    IEnumerable<XElement>? specificTag = xdoc.Descendants(searchTag);
+
+                    if (specificTag.Count() > 0)
+                        responseStr = specificTag.First().ToString(SaveOptions.DisableFormatting);
+                }
+            }
+            catch (Exception e) { }
+
             return Deserialize.Xml<TResponse>(responseStr);
         }
 
@@ -194,7 +242,7 @@ namespace WSGYG63.Shared.Functions
             return returnObject;
         }
 
-        public async Task<Response> PostFromUrl<Response>(string url, object body, string apiKey, StringBuilder log, string accessToken = null)
+        public async Task<Response> PostFromUrl<Response>(string url, object body, string apiKey, StringBuilder log, string accessToken = null, string? searchTag = "")
         {
             Response returnObject = default;
             using (HttpClient httpClient = new HttpClient())
@@ -212,6 +260,26 @@ namespace WSGYG63.Shared.Functions
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     log.Append($"\nTrama respuesta: {apiResponse}");
+
+
+                    if (!string.IsNullOrEmpty(searchTag))
+                    {
+                        try
+                        {
+                            // remove all prefixes in tags example = n0:head -> head
+                            apiResponse = Regex.Replace(apiResponse, @"(<\s*\/?)\s*(\w+):(\w+)", "$1$3");
+
+                            XDocument xdoc = XDocument.Parse(apiResponse);
+
+                            // get tag inside other tags
+                            IEnumerable<XElement>? specificTag = xdoc.Descendants(searchTag);
+
+                            if (specificTag.Count() > 0)
+                                apiResponse = specificTag.First().ToString(SaveOptions.DisableFormatting);
+                        }
+                        catch (Exception e){}
+                    }
+
                     returnObject = Deserialize.Xml<Response>(apiResponse);
                 }
                 else
