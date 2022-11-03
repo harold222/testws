@@ -39,28 +39,27 @@ namespace WSGYG63.Controllers
 
             try
             {
-                //string text = "<entry><title type='text'>ObtenerDataBPSet()</title><updated>2022-11-02</updated><category term=' schema='/><link href='ObtenerDataBPSet()' rel='self' title='obtenerDataBP'><content type='application/xml'><properties><Type/><NumberId/><Bpartner/><NameFirst/><NameSecond/><FirstLastname/><d:SecondLastname/><PostalCode/><Country/><Region/><City/><District/><Street/><Genero/><Birthdate/><CivilSt/><Email/><TelNumber/><MobilePhone/><MENSAJE/></properties></content></entry>";
-
-                string text = "<m:properties><d:Type/><d:NumberId/><d:Bpartner/><d:NameFirst/><d:NameSecond/><d:FirstLastname/><d:SecondLastname/><d:PostalCode/><d:Country/><d:Region/><d:City/><d:District/><d:Street/><d:Genero/><d:Birthdate/><d:CivilSt/><d:Email/><d:TelNumber/><d:MobilePhone/><d:MENSAJE/></m:properties>";
+                string text = "<entry><title type='text'>ObtenerDataBPSet()</title><updated>2022-11-02</updated><category term=' schema='/><link href='ObtenerDataBPSet()' rel='self' title='obtenerDataBP'/><content type='application/xml'><m:properties><d:Type></d:Type><d:NumberId></d:NumberId><d:Bpartner></d:Bpartner><d:NameFirst></d:NameFirst><d:NameSecond/><d:FirstLastname></d:FirstLastname><d:SecondLastname></d:SecondLastname><d:PostalCode/><d:Country></d:Country><d:Region></d:Region><d:City></d:City><d:District/><d:Street></d:Street><d:Genero></d:Genero><d:Birthdate></d:Birthdate><d:CivilSt></d:CivilSt><d:Email></d:Email><d:TelNumber></d:TelNumber><d:MobilePhone/><d:MENSAJE/></m:properties></content></entry>";
 
 
                 string output = Regex.Replace(text, @"(<\s*\/?)\s*(\w+):(\w+)", "$1$3");
 
+                XDocument xdoc = XDocument.Parse(output);
+
+                IEnumerable<XElement>? specificTag = xdoc.Descendants("properties");
+
+                if (specificTag.Count() > 0)
+                {
+                    output = specificTag.First().ToString(SaveOptions.DisableFormatting);
+                }
 
                 QueryBPResponse a = Deserialize.Xml<QueryBPResponse>(output);
-
             }
             catch (Exception e)
             {
 
                 throw;
             }
-
-
-
-
-
-
 
 
 
