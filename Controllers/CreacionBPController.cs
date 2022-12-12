@@ -42,6 +42,8 @@ namespace WSGYG63.Controllers
 
             try
             {
+                TimeSpan horaii = DateTime.Parse(DateTime.Now.ToString("o")).TimeOfDay;
+
                 GlobalToken? newOrCurrentToken = await new RefreshToken().verify(
                     this.url,
                     this.tokenParams,
@@ -79,9 +81,17 @@ namespace WSGYG63.Controllers
 
                     log.Append($"{Environment.NewLine}Trama regreso: {JsonConvert.SerializeObject(response)}");
 
+                    TimeSpan horaf = DateTime.Parse(DateTime.Now.ToString("o")).TimeOfDay;
+                    string horaff = (horaf - horaii).ToString();
+
+                    log.Append($"{Environment.NewLine}Tiempo total: {horaff} segundos.");
                     Log.write(log.ToString(), this.rutaI, ControllersNames.Create);
                     log.Clear();
-                    return Ok(response);
+
+                    return Ok(new ResponseCreate
+                    {
+                        Response = response
+                    });
                 }
                 else
                 {

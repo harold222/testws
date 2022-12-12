@@ -238,4 +238,9 @@ namespace WSGYG63.Models.CreateBP
         [XmlElement(ElementName = "MESSAGE")]
         public string Message { get; set; }
     }
+
+    public class ResponseCreate
+    {
+        public CreateBPResponse Response { get; set; }
+    }
 }

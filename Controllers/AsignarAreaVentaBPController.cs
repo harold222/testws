@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using WSGYG63.Models.AssignSaleAreaBP;
 using WSGYG63.Models.Token;
 using WSGYG63.Shared.Enums;
@@ -39,7 +41,9 @@ namespace WSGYG63.Controllers
             log.Append($"Entrada controlador: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss:ffff")}");
 
             try
-            { 
+            {
+                TimeSpan horaii = DateTime.Parse(DateTime.Now.ToString("o")).TimeOfDay;
+
                 if (request.item?.Count > 0)
                 {
                     request.item.ForEach(item =>
@@ -71,11 +75,29 @@ namespace WSGYG63.Controllers
                     string requestXml = Deserialize.Serialize<AssignSaleAreaBPRequest>(request, this.openTagXml, this.closeTagXml);
                     log.Append($"{Environment.NewLine}Trama envio: {Environment.NewLine}{requestXml}");
 
-                    AssignSaleAreaBPResponse response = await http.postXMLData<AssignSaleAreaBPResponse>(this.url, this.tokenParams.client_id, requestXml, AuthorizationEnum.ACCES_TOKEN, this.currentToken.AccessToken).ConfigureAwait(false);
+                    AssignSaleAreaBPResponse response = await http.postXMLData<AssignSaleAreaBPResponse>(
+                        this.url,
+                        this.tokenParams.client_id,
+                        requestXml,
+                        AuthorizationEnum.ACCES_TOKEN,
+                        this.currentToken.AccessToken,
+                        "E_RETURN",
+                        new List<string>
+                        {
+                            "n0",
+                            "soap-env"
+                        },
+                        log
+                    ).ConfigureAwait(false);
                     log.Append($"{Environment.NewLine}Trama regreso: {JsonConvert.SerializeObject(response)}");
 
+                    TimeSpan horaf = DateTime.Parse(DateTime.Now.ToString("o")).TimeOfDay;
+                    string horaff = (horaf - horaii).ToString();
+
+                    log.Append($"{Environment.NewLine}Tiempo total: {horaff} segundos.");
                     Log.write(log.ToString(), this.rutaI, ControllersNames.AssignSaleArea);
                     log.Clear();
+
                     return Ok(response);
                 }
                 else

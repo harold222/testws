@@ -38,6 +38,8 @@ namespace WSGYG63.Controllers
 
             try
             {
+                TimeSpan horaii = DateTime.Parse(DateTime.Now.ToString("o")).TimeOfDay;
+
                 // cuando tenga acceso a hacerle peticiones a los 6 endpoints revisar que me devuelven
                 // con un token que no funciona, para volver a intentarla peticion, con un nuevo token
 
@@ -62,13 +64,28 @@ namespace WSGYG63.Controllers
                     
                     Dictionary<string, string?>? requestDict = this.toDict.Trasform<QueryBPRequest>(request);
                     log.Append($"{Environment.NewLine}Trama envio: {JsonConvert.SerializeObject(request)}");
-                    
-                    QueryBPResponse? response = await http.GETAsync<QueryBPResponse, QueryBPRequest>(this.url, this.tokenParams.client_id, requestDict, this.currentToken.AccessToken, "properties").ConfigureAwait(false);
+
+                    QueryBPResponse? response = await http.GETAsync<QueryBPResponse, QueryBPRequest>(
+                        this.url,
+                        this.tokenParams.client_id,
+                        requestDict,
+                        this.currentToken.AccessToken,
+                        "properties"
+                    ).ConfigureAwait(false);
+
                     log.Append($"{Environment.NewLine}Trama regreso: {JsonConvert.SerializeObject(response)}");
 
+                    TimeSpan horaf = DateTime.Parse(DateTime.Now.ToString("o")).TimeOfDay;
+                    string horaff = (horaf - horaii).ToString();
+
+                    log.Append($"{Environment.NewLine}Tiempo total: {horaff} segundos.");
                     Log.write(log.ToString(), this.rutaI, ControllersNames.Query);
                     log.Clear();
-                    return Ok(response);
+
+                    return Ok(new ResponseQuery
+                    {
+                        Response = response
+                    });
                 }
                 else
                 {
@@ -81,9 +98,7 @@ namespace WSGYG63.Controllers
             catch (Exception e)
             {
                 log.Append(Environment.NewLine + e.ToString());
-                
                 Log.write(log.ToString(), this.rutaI, ControllersNames.Query);
-                // clean memory
                 log.Clear();
                 return StatusCode(500);
             }

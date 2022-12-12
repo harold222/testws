@@ -50,4 +50,9 @@ namespace WSGYG63.Models.AssignBankAccountBP
         [JsonPropertyName("INDICADOR")]
         public string Indicador { get; set; }
     }
+
+    public class ResponseAssignBank
+    {
+        public AssignBankAccountBPResponse Response { get; set; }
+    }
 }

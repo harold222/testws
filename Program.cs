@@ -46,12 +46,19 @@ builder.Services.Configure<GlobalToken>(async x =>
 
     Task<TokenResponse> resp = new Http().GetToken<TokenResponse>(host, token.client_id, requestDict);
     
-    resp.Wait();
-    
-    if (resp.Result != null)
+    if (resp != null)
     {
-        x.DateExpire = new RefreshToken().refresh(resp.Result.ExpiresIn);
-        x.AccessToken = resp.Result.AccessToken;
+        try
+        {
+            resp.Wait();
+
+            if (resp.Result != null)
+            {
+                x.DateExpire = new RefreshToken().refresh(resp.Result.ExpiresIn);
+                x.AccessToken = resp.Result.AccessToken;
+            }
+        }
+        catch (Exception) { }
     }
 });
 

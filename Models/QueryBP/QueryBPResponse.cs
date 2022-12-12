@@ -69,4 +69,8 @@ namespace WSGYG63.Models.QueryBP
         [XmlElement(ElementName = "MENSAJE")]
         public string Message { get; set; }
     }
+
+    public class ResponseQuery {
+        public QueryBPResponse Response { get; set; }
+    }
 }

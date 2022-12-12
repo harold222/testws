@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using WSGYG63.Models.AssignBP;
 using WSGYG63.Models.Token;
 using WSGYG63.Shared.Enums;
@@ -30,15 +32,88 @@ namespace WSGYG63.Controllers
             this.currentToken = token.Value;
         }
 
+        //[NonAction]
+        //private static XElement RemoveAllNamespaces(XElement xmlDocument)
+        //{
+        //    if (!xmlDocument.HasElements)
+        //    {
+        //        XElement xElement = new XElement(xmlDocument.Name.LocalName);
+        //        xElement.Value = xmlDocument.Value;
+
+        //        foreach (XAttribute attribute in xmlDocument.Attributes())
+        //            xElement.Add(attribute);
+
+        //        return xElement;
+        //    }
+        //    return new XElement(xmlDocument.Name.LocalName, xmlDocument.Elements().Select(el => RemoveAllNamespaces(el)));
+        //}
+
         [HttpPost]
         public async Task<IActionResult> index([FromBody] AssignBPRequest request)
         {
+            //try
+            //{
+            //    List<string> specifPrefix = new List<string>
+            //    {
+            //        "n0",
+            //        "soap-env"
+            //    };
+
+            //    string xmlResponse = "<soap-env:Envelope xmlns:soap-env='http://schemas.xmlsoap.org/soap/envelope/'><soap-env:Header/><soap-env:Body><n0:ZSdserviciosCargaRolResponse xmlns:n0='urn:sap-com:document:sap:soap:functions:mc-style'><ExTreturn></ExTreturn></n0:ZSdserviciosCargaRolResponse></soap-env:Body></soap-env:Envelope>";
+
+            //    if (specifPrefix != null)
+            //    {
+            //        specifPrefix.ForEach(@namespace =>
+            //        {
+            //            // remove specific prefix tag example = soap-env:body -> body
+            //            xmlResponse = Regex.Replace(xmlResponse, $@"((?<=\</|\<){@namespace}:|xmlns:{@namespace}=""[^""]+"")", "");
+            //        });
+            //    }
+
+            //    string searchTag = "ExTreturn";
+
+            //    if (!string.IsNullOrEmpty(searchTag))
+            //    {
+            //        // remove all prefixes in tags example = n0:head -> head
+            //        xmlResponse = Regex.Replace(xmlResponse, @"(<\s*\/?)\s*(\w+):(\w+)", "$1$3");
+
+            //        XDocument xdoc = XDocument.Parse(xmlResponse);
+
+            //        List<XElement> allTagsWithoutNamespaces = new();
+
+            //        foreach (var item in xdoc.Descendants())
+            //        {
+            //            allTagsWithoutNamespaces.Add(RemoveAllNamespaces(item));
+            //        }
+
+            //        // get tag inside other tags
+            //        IEnumerable<XElement>? specificTag = allTagsWithoutNamespaces.Descendants(searchTag);
+
+            //        if (specificTag.Count() > 0)
+            //        {
+            //            xmlResponse = specificTag.First().ToString(SaveOptions.DisableFormatting);
+            //        }
+
+            //        var a = Deserialize.Xml<AssignBPResponse>(xmlResponse);
+
+            //        return Ok(a);
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+
+            //    throw;
+            //}
+
+
             Http http = new();
             StringBuilder log = new();
             log.Append($"Entrada controlador: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss:ffff")}");
 
             try
             {
+                TimeSpan horaii = DateTime.Parse(DateTime.Now.ToString("o")).TimeOfDay;
+
                 GlobalToken? newOrCurrentToken = await new RefreshToken().verify(
                     this.url,
                     this.tokenParams,
@@ -58,14 +133,41 @@ namespace WSGYG63.Controllers
                         this.currentToken.DateExpire = newOrCurrentToken.DateExpire;
                     }
 
+                    if (request.item.Count > 0)
+                    {
+                        var partners = request.item.First().PartnerRole.item.Where(item => 
+                            !string.IsNullOrEmpty(item.PartnerRole));
+
+                        request.item.First().PartnerRole.item = partners.ToList();
+                    }
+
                     string requestXml = Deserialize.Serialize<AssignBPRequest>(request, this.openTagXml, this.closeTagXml);
                     log.Append($"{Environment.NewLine}Trama envio: {Environment.NewLine}{requestXml}");
 
-                    AssignBPResponse response = await http.postXMLData<AssignBPResponse>(this.url, this.tokenParams.client_id, requestXml, AuthorizationEnum.ACCES_TOKEN, this.currentToken.AccessToken).ConfigureAwait(false);
+                    AssignBPResponse response = await http.postXMLData<AssignBPResponse>(
+                        this.url,
+                        this.tokenParams.client_id,
+                        requestXml,
+                        AuthorizationEnum.ACCES_TOKEN,
+                        this.currentToken.AccessToken,
+                        "ExTreturn",
+                        new List<string>
+                        {
+                            "n0",
+                            "soap-env"
+                        },
+                        log
+                    ).ConfigureAwait(false);
+                    
                     log.Append($"{Environment.NewLine}Trama regreso: {JsonConvert.SerializeObject(response)}");
+                    
+                    TimeSpan horaf = DateTime.Parse(DateTime.Now.ToString("o")).TimeOfDay;
+                    string horaff = (horaf - horaii).ToString();
 
+                    log.Append($"{Environment.NewLine}Tiempo total: {horaff} segundos.");
                     Log.write(log.ToString(), this.rutaI, ControllersNames.AssignRoles);
                     log.Clear();
+
                     return Ok(response);
                 }
                 else

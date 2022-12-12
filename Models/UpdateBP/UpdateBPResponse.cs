@@ -3,34 +3,40 @@ using System.Xml.Serialization;
 
 namespace WSGYG63.Models.UpdateBP
 {
+    [XmlRoot(ElementName = "item")]
     public class UpdateBPResponse
     {
         [JsonPropertyName("MSGTY")]
-        [XmlElement(ElementName = "MSGTY")]
+        [XmlElement(ElementName = "TYPE")]
         public string Msgty { get; set; }
 
         [JsonPropertyName("MSGNO")]
-        [XmlElement(ElementName = "MSGNO")]
+        [XmlElement(ElementName = "LOG_MSG_NO")]
         public string Msgno { get; set; }
 
         [JsonPropertyName("MSGV1")]
-        [XmlElement(ElementName = "MSGV1")]
+        [XmlElement(ElementName = "MESSAGE_V1")]
         public string Msgv1 { get; set; }
 
         [JsonPropertyName("MSGV2")]
-        [XmlElement(ElementName = "MSGV2")]
+        [XmlElement(ElementName = "MESSAGE_V2")]
         public string Msgv2 { get; set; }
 
         [JsonPropertyName("MSGV3")]
-        [XmlElement(ElementName = "MSGV3")]
+        [XmlElement(ElementName = "MESSAGE_V3")]
         public string Msgv3 { get; set; }
 
         [JsonPropertyName("MSGV4")]
-        [XmlElement(ElementName = "MSGV4")]
+        [XmlElement(ElementName = "MESSAGE_V4")]
         public string Msgv4 { get; set; }
 
         [JsonPropertyName("MESSAGE")]
         [XmlElement(ElementName = "MESSAGE")]
         public string Message { get; set; }
+    }
+
+    public class ResponseUpdate
+    {
+        public UpdateBPResponse Response { get; set; }
     }
 }

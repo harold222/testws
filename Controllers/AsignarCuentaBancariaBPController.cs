@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using WSGYG63.Models.AssignBankAccountBP;
 using WSGYG63.Models.Token;
 using WSGYG63.Shared.Enums;
@@ -41,6 +39,8 @@ namespace WSGYG63.Controllers
 
             try
             {
+                TimeSpan horaii = DateTime.Parse(DateTime.Now.ToString("o")).TimeOfDay;
+
                 GlobalToken? newOrCurrentToken = await new RefreshToken().verify(
                     this.url,
                     this.tokenParams,
@@ -62,13 +62,29 @@ namespace WSGYG63.Controllers
 
                     log.Append($"{Environment.NewLine}Trama envio: {JsonConvert.SerializeObject(request)}");
 
-                    AssignBankAccountBPResponse response = await http.PostFromUrl<AssignBankAccountBPResponse>(this.url, request, this.tokenParams.client_id, log, this.currentToken.AccessToken);
+                    AssignBankAccountBPResponse response = await http.PostFromUrl<AssignBankAccountBPResponse>(
+                        this.url,
+                        request,
+                        this.tokenParams.client_id,
+                        log,
+                        this.currentToken.AccessToken,
+                        "properties"
+                    ).ConfigureAwait(false);
                     
                     if (response != null)
                     {
+                        TimeSpan horaf = DateTime.Parse(DateTime.Now.ToString("o")).TimeOfDay;
+                        string horaff = (horaf - horaii).ToString();
+
+                        log.Append($"{Environment.NewLine}Trama regreso: {JsonConvert.SerializeObject(response)}");
+                        log.Append($"{Environment.NewLine}Tiempo total: {horaff} segundos.");
                         Log.write(log.ToString(), this.rutaI, ControllersNames.AssignBank);
                         log.Clear();
-                        return Ok(response);
+
+                        return Ok(new ResponseAssignBank
+                        {
+                             Response = response,
+                        });
                     }
                     else
                     {

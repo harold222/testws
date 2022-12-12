@@ -5,6 +5,8 @@ using WSGYG63.Shared.Enums;
 using Microsoft.Extensions.Options;
 using System.Text;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace WSGYG63.Controllers
 {
@@ -40,6 +42,8 @@ namespace WSGYG63.Controllers
 
             try
             {
+                TimeSpan horaii = DateTime.Parse(DateTime.Now.ToString("o")).TimeOfDay;
+
                 GlobalToken? newOrCurrentToken = await new RefreshToken().verify(
                     this.url,
                     this.tokenParams,
@@ -62,13 +66,33 @@ namespace WSGYG63.Controllers
                     string requestXml = Deserialize.Serialize<UpdateBPRequest>(request, this.openTagXml, this.closeTagXml);
                     log.Append($"{Environment.NewLine}Trama envio: {Environment.NewLine}{requestXml}");
 
-                    UpdateBPResponse response = await http.postXMLData<UpdateBPResponse>(this.url, this.tokenParams.client_id, requestXml, AuthorizationEnum.ACCES_TOKEN, this.currentToken.AccessToken).ConfigureAwait(false);
+                    UpdateBPResponse response = await http.postXMLData<UpdateBPResponse>(
+                        this.url,
+                        this.tokenParams.client_id,
+                        requestXml,
+                        AuthorizationEnum.ACCES_TOKEN,
+                        this.currentToken.AccessToken,
+                        "item",
+                        new List<string>
+                        {
+                            "n0",
+                            "soap-env"
+                        }
+                    ).ConfigureAwait(false);
+
                     log.Append($"{Environment.NewLine}Trama regreso: {JsonConvert.SerializeObject(response)}");
 
+                    TimeSpan horaf = DateTime.Parse(DateTime.Now.ToString("o")).TimeOfDay;
+                    string horaff = (horaf - horaii).ToString();
+
+                    log.Append($"{Environment.NewLine}Tiempo total: {horaff} segundos.");
                     Log.write(log.ToString(), this.rutaI, ControllersNames.Update);
                     log.Clear();
 
-                    return Ok(response);
+                    return Ok(new ResponseUpdate
+                    {
+                        Response = response
+                    });
                 }
                 else
                 {

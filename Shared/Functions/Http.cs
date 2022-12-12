@@ -20,7 +20,6 @@ namespace WSGYG63.Shared.Functions
             HttpWebRequest web = WebRequest.Create(url) as HttpWebRequest;
 
             web.Method = "GET";
-            //web.ContentType = "text/xml; charset='utf-8'";
             web.Headers.Add("apikey", apiKey);
 
             if (!string.IsNullOrEmpty(accessToken))
@@ -51,19 +50,26 @@ namespace WSGYG63.Shared.Functions
 
                     XDocument xdoc = XDocument.Parse(text);
 
+                    List<XElement> allTagsWithoutNamespaces = new();
+
+                    foreach (var item in xdoc.Descendants())
+                    {
+                        allTagsWithoutNamespaces.Add(RemoveAllNamespaces(item));
+                    }
+
                     // get tag inside other tags
-                    IEnumerable<XElement>? specificTag = xdoc.Descendants(searchTag);
+                    IEnumerable<XElement>? specificTag = allTagsWithoutNamespaces.Descendants(searchTag);
 
                     if (specificTag.Count() > 0)
                         text = specificTag.First().ToString(SaveOptions.DisableFormatting);
                 }
-                catch (Exception e){}
+                catch (Exception e) { }
             }
 
             return Deserialize.Xml<TResponse>(text);
         }
 
-        public async Task<TResponse> postXMLData<TResponse>(string url, string apiKey, string requestXml, AuthorizationEnum typeAuth,string? accessToken = null, string? searchTag = "", List<string>? specifPrefix = null)
+        public async Task<TResponse> postXMLData<TResponse>(string url, string apiKey, string requestXml, AuthorizationEnum typeAuth,string? accessToken = null, string? searchTag = "", List<string>? specifPrefix = null, StringBuilder? log = null)
         {
             HttpWebRequest web = (HttpWebRequest)WebRequest.Create(url);
             byte[] bytes = Encoding.ASCII.GetBytes(requestXml);
@@ -95,6 +101,9 @@ namespace WSGYG63.Shared.Functions
             // Get response in XML
             string responseStr = new StreamReader(responseStream).ReadToEnd();
 
+            if (log != null)
+                log.Append($"{Environment.NewLine}Xml sin transformar: {responseStr}");
+
             try
             {
                 if (specifPrefix != null)
@@ -113,8 +122,15 @@ namespace WSGYG63.Shared.Functions
 
                     XDocument xdoc = XDocument.Parse(responseStr);
 
+                    List<XElement> allTagsWithoutNamespaces = new();
+
+                    foreach (var item in xdoc.Descendants())
+                    {
+                        allTagsWithoutNamespaces.Add(RemoveAllNamespaces(item));
+                    }
+
                     // get tag inside other tags
-                    IEnumerable<XElement>? specificTag = xdoc.Descendants(searchTag);
+                    IEnumerable<XElement>? specificTag = allTagsWithoutNamespaces.Descendants(searchTag);
 
                     if (specificTag.Count() > 0)
                         responseStr = specificTag.First().ToString(SaveOptions.DisableFormatting);
@@ -124,77 +140,6 @@ namespace WSGYG63.Shared.Functions
 
             return Deserialize.Xml<TResponse>(responseStr);
         }
-
-        //public TResponse PostExpedia<TResponse>(string url, string apiKey, object postData, string? accessToken)
-        //{
-        //    HttpWebRequest web = (HttpWebRequest)WebRequest.Create(url);
-
-        //    web.Method = "POST";
-        //    web.ContentType = "text/xml; encoding='utf-8'";
-        //    web.Headers.Add("apikey", apiKey);
-
-        //    if (!string.IsNullOrEmpty(accessToken))
-        //        web.Headers.Add("Authorization", $"Bearer {accessToken}");
-
-        //    using (StreamWriter streamWriter = new StreamWriter(web.GetRequestStream()))
-        //    {
-        //        string data = JsonConvert.SerializeObject(postData);
-        //        streamWriter.Write(data);
-        //    }
-
-        //    string text;
-        //    using (HttpWebResponse response = (HttpWebResponse)web.GetResponse())
-        //    {
-        //        // Get the stream associated with the response.
-        //        Stream stream = response.GetResponseStream();
-        //        Encoding encoding = Encoding.UTF8;
-        //        ContentType contentType = new ContentType(response.Headers[HttpResponseHeader.ContentType]);
-        //        if (!string.IsNullOrEmpty(contentType.CharSet))
-        //        {
-        //            encoding = Encoding.GetEncoding(contentType.CharSet);
-        //        }
-
-        //        using (StreamReader reader = new StreamReader(stream, encoding))
-        //        {
-        //            text = reader.ReadToEnd();
-        //        }
-        //    }
-
-        //    return Deserialize.Xml<TResponse>(text);
-        //}
-
-        //public async Task<XmlDocument> ObtenerInformacionTotalStay(string url, string xmlinput)
-        //{
-        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-
-        //    string postData = "Data=" + xmlinput;
-        //    byte[] data = Encoding.ASCII.GetBytes(postData);
-
-        //    request.Method = "POST";
-        //    request.ContentType = "application/x-www-form-urlencoded";
-        //    request.ContentLength = data.Length;
-        //    request.AutomaticDecompression = DecompressionMethods.GZip;
-        //    // Set some reasonable limits on resources used by this request
-        //    request.MaximumAutomaticRedirections = 4;
-        //    request.MaximumResponseHeadersLength = 4;
-        //    // Set credentials to use for this request.
-        //    request.Credentials = CredentialCache.DefaultCredentials;
-
-        //    using (Stream stream = await request.GetRequestStreamAsync())
-        //    {
-        //        await stream.WriteAsync(data, 0, data.Length);
-        //    }
-
-        //    HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync();
-
-        //    string text = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();
-
-
-        //    XmlDocument xDoc = new XmlDocument();
-        //    xDoc.LoadXml(text);
-
-        //    return xDoc;
-        //}
 
         public async Task<Response> GetToken<Response>(string url, string apikey, IDictionary<string, string> dict, StringBuilder? log = null)
         {
@@ -217,7 +162,7 @@ namespace WSGYG63.Shared.Functions
                     returnObject = JsonConvert.DeserializeObject<Response>(apiResponse);
 
                     if (log != null)
-                        log.Append($"\nTrama respuesta token = {apiResponse}");
+                        log.Append($"\nToken obtenido");
                 }
                 else
                 {
@@ -226,7 +171,7 @@ namespace WSGYG63.Shared.Functions
                         try
                         {
                             string apiResponse = await response.Content.ReadAsStringAsync();
-                            log.Append($"\nTrama respuesta token = {apiResponse}");
+                            log.Append($"\nToken obtenido");
                         }
                         catch (Exception e)
                         {
@@ -253,6 +198,7 @@ namespace WSGYG63.Shared.Functions
                     httpClient.DefaultRequestHeaders.Add("access_token", accessToken);
 
                 httpClient.DefaultRequestHeaders.Add("apikey", apiKey);
+                httpClient.DefaultRequestHeaders.Add("X-Requested-With", "X");
 
                 using HttpResponseMessage response = await httpClient.PostAsJsonAsync(url, body);
 
@@ -261,23 +207,29 @@ namespace WSGYG63.Shared.Functions
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     log.Append($"\nTrama respuesta: {apiResponse}");
 
-
                     if (!string.IsNullOrEmpty(searchTag))
                     {
                         try
                         {
-                            // remove all prefixes in tags example = n0:head -> head
+                            // remove attributes in tag example = m:properties -> properties
                             apiResponse = Regex.Replace(apiResponse, @"(<\s*\/?)\s*(\w+):(\w+)", "$1$3");
 
                             XDocument xdoc = XDocument.Parse(apiResponse);
 
+                            List<XElement> allTagsWithoutNamespaces = new();
+
+                            foreach (var item in xdoc.Descendants())
+                            {
+                                allTagsWithoutNamespaces.Add(RemoveAllNamespaces(item));
+                            }
+
                             // get tag inside other tags
-                            IEnumerable<XElement>? specificTag = xdoc.Descendants(searchTag);
+                            IEnumerable<XElement>? specificTag = allTagsWithoutNamespaces.Descendants(searchTag);
 
                             if (specificTag.Count() > 0)
                                 apiResponse = specificTag.First().ToString(SaveOptions.DisableFormatting);
                         }
-                        catch (Exception e){}
+                        catch (Exception e) { }
                     }
 
                     returnObject = Deserialize.Xml<Response>(apiResponse);
@@ -291,10 +243,7 @@ namespace WSGYG63.Shared.Functions
                     }
                     catch (Exception e)
                     {
-                        if (response != null)
-                            log.Append($"\nError get token: {e.Message.ToString()}");
-                        else
-                            log.Append($"\nError get token: {e.Message.ToString()} - status: {response.StatusCode}");
+                        log.Append($"\nError get token: {e.Message.ToString()} - status: {response.StatusCode}");
                     }
                 }
             }
@@ -302,15 +251,30 @@ namespace WSGYG63.Shared.Functions
             return returnObject;
         }
 
+        private static XElement RemoveAllNamespaces(XElement xmlDocument)
+        {
+            if (!xmlDocument.HasElements)
+            {
+                XElement xElement = new XElement(xmlDocument.Name.LocalName);
+                xElement.Value = xmlDocument.Value;
+
+                foreach (XAttribute attribute in xmlDocument.Attributes())
+                    xElement.Add(attribute);
+
+                return xElement;
+            }
+            return new XElement(xmlDocument.Name.LocalName, xmlDocument.Elements().Select(el => RemoveAllNamespaces(el)));
+        }
+
         private static string QueryString(IDictionary<string, string> dict)
         {
             List<string> list = new List<string>();
             foreach (KeyValuePair<string, string> item in dict)
             {
-                list.Add(item.Key + "=" + item.Value);
+                list.Add(item.Key + "='" + item.Value + "'");
             }
 
-            return $"?{string.Join("&", list)}";
+            return $"({string.Join(",", list)})";
         }
     }
 }
