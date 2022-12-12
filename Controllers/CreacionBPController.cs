@@ -98,7 +98,7 @@ namespace WSGYG63.Controllers
                     log.Append($"{Environment.NewLine}Salida controlador");
                     Log.write(log.ToString(), this.rutaI, ControllersNames.Create);
                     log.Clear();
-                    return StatusCode(500);
+                    return StatusCode(400);
                 }
             }
             catch (Exception e)
@@ -106,7 +106,7 @@ namespace WSGYG63.Controllers
                 log.Append(Environment.NewLine + e.ToString());
                 Log.write(log.ToString(), this.rutaI, ControllersNames.Create);
                 log.Clear();
-                return StatusCode(500);
+                return StatusCode(400);
             }
         }
     }

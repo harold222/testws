@@ -98,6 +98,12 @@ namespace WSGYG63.Controllers
                     Log.write(log.ToString(), this.rutaI, ControllersNames.AssignSaleArea);
                     log.Clear();
 
+                    // remove all empty tags
+                    IEnumerable<ResponseSaleArea>? allSaleAreas = response.Item.Where(saleArea =>
+                        !string.IsNullOrEmpty(saleArea.Message) && !string.IsNullOrEmpty(saleArea.Msgty)
+                    );
+
+                    response.Item = allSaleAreas.ToList();
                     return Ok(response);
                 }
                 else
@@ -106,7 +112,7 @@ namespace WSGYG63.Controllers
                     Log.write(log.ToString(), this.rutaI, ControllersNames.AssignSaleArea);
                     log.Clear();
 
-                    return StatusCode(500);
+                    return StatusCode(400);
                 }
             }
             catch (Exception e)
@@ -115,7 +121,7 @@ namespace WSGYG63.Controllers
                 Log.write(log.ToString(), this.rutaI, ControllersNames.AssignSaleArea);
                 log.Clear();
 
-                return StatusCode(500);
+                return StatusCode(400);
             }
         }
     }
